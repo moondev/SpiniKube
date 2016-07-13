@@ -1,0 +1,13 @@
+redis:
+  connection: redis://redis-alias:6379
+server:
+  port: ${services.gate.port:8084}
+services:
+  clouddriver:
+    baseUrl: http://clouddriver-alias:7002
+  deck:
+    baseUrl: http://deck-alias:9000
+  front50:
+    baseUrl: http://front50-alias:8080
+  orca:
+    baseUrl: http://orca-alias:8083

@@ -1,0 +1,39 @@
+bakery:
+  allowMissingPackageInstallation: ${services.bakery.allowMissingPackageInstallation:false}
+  baseUrl: http://rosco-alias:8087
+  extractBuildDetails: ${services.bakery.extractBuildDetails:true}
+  propagateCloudProviderType: ${services.bakery.propagateCloudProviderType:true}
+default:
+  bake:
+    account: default
+  securityGroups: null
+  vpc:
+    securityGroups: null
+echo:
+  baseUrl: ${services.echo.baseUrl:8089}
+  enabled: ${services.echo.enabled:false}
+flex:
+  baseUrl: http://not-a-host
+front50:
+  baseUrl: http://front50-alias:8080
+igor:
+  enabled: false
+kato:
+  baseUrl: http://clouddriver-alias:7002
+mort:
+  baseUrl: http://clouddriver-alias:7002
+oort:
+  baseUrl: http://clouddriver-alias:7002
+redis:
+  connection: redis://redis-alias:6379
+server:
+  port: ${services.orca.port:8083}
+services:
+  orca:
+    timezone: west
+tasks:
+  executionWindow:
+    timezone: ${services.orca.timezone}
+tide:
+  baseUrl: http://not-a-host
+  enabled: false

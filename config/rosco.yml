@@ -1,0 +1,21 @@
+aws:
+  enabled: ${providers.aws.enabled:false}
+docker:
+  bakeryDefaults:
+    targetRepository: null
+  enabled: ${services.docker.enabled:false}
+google:
+  accounts:
+  - jsonPath: ${providers.google.primaryCredentials.jsonPath}
+    name: ${providers.google.primaryCredentials.name}
+    project: ${providers.google.primaryCredentials.project}
+  enabled: ${providers.google.enabled:false}
+  gce:
+    bakeryDefaults:
+      zone: ${providers.google.defaultZone}
+redis:
+  connection: redis://redis-alias:6379
+rosco:
+  configDir: ${services.rosco.configDir}
+server:
+  port: ${services.rosco.port:8087}
