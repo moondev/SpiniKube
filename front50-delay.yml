@@ -1,16 +1,20 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: spinnaker-front50
+  name: delay
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: spinnaker-front50
+        app: delay
     spec:
       containers:
-      - name: sspinnaker-front50
+      - name: delay
         image: quay.io/spinnaker/front50
         ports:
         - containerPort: 8080
+        command:
+        - "/bin/sh"
+        - "-c"
+        - "sleep 3; /opt/front50/bin/front50"

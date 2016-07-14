@@ -7,6 +7,7 @@ import subprocess
 
 ##############
 os.system("minikube delete")
+time.sleep(5)
 os.system("minikube start --memory 6000 --cpus 4")
 #############
 
@@ -39,7 +40,7 @@ os.system("kubectl create namespace spinnaker")
 time.sleep(5)
 os.system("kubectl create --namespace spinnaker -f cassandra.yml")
 time.sleep(10)
-os.system("kubectl expose deployment cassandra --type=NodePort")
+os.system("kubectl expose deployment cassandra --namespace spinnaker --type=NodePort")
 ########################
 
 #os.system("kubectl run front50 --image=quay.io/spinnaker/front50 --namespace spinnaker --port=8080")
@@ -51,11 +52,12 @@ os.system("kubectl expose deployment cassandra --type=NodePort")
 
 
 os.system("kubectl create secret generic front50cfg --from-file=./config/front50.yml --namespace spinnaker")
-time.sleep(5)
+#time.sleep(5)
 
 
 
 os.system("kubectl create --namespace spinnaker -f front50.yml")
+os.system("kubectl create --namespace spinnaker -f front50-delay.yml")
 
 #kubectl get pods --all-namespaces --output json
 
