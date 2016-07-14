@@ -1,16 +1,20 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: spin-front50
+  name: work
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: spin-front50
+        app: work
     spec:
       containers:
-      - name: spin-ront50
+      - name: work
         image: quay.io/spinnaker/front50
         ports:
         - containerPort: 8080
+        command:
+        - "/bin/sh"
+        - "-c"
+        - "sleep 5; /opt/front50/bin/front50"

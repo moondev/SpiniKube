@@ -1,16 +1,19 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: spin-front50
+  name: spin-stock
+  namespace: spinnaker
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: spin-front50
+        app: spin-stock
+        stack: front50
+        version: v000
     spec:
       containers:
-      - name: spin-ront50
-        image: quay.io/spinnaker/front50
+      - name: front50
+        image: chadmoon/spin-front50
         ports:
         - containerPort: 8080
