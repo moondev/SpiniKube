@@ -12,7 +12,5 @@ spec:
       containers:
       - name: front50
         image: quay.io/spinnaker/front50
-        command:
-        - "/bin/bash -c 'sleep 5; /opt/front50/bin/front50'"
         ports:
         - containerPort: 8080

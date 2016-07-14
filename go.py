@@ -5,38 +5,61 @@ import collections
 import subprocess
 
 
-def checkStatus(command, term):
-  portOpen = False
-  while portOpen == False:
-    result = subprocess.check_output(command, shell=True)
-    if term in result:
-      print "waiting..."
-      time.sleep(2)
-    else:
-      portOpen = True
-
+##############
 os.system("minikube delete")
-os.system("minikube start --memory 4000 --cpus 4")
+os.system("minikube start --memory 6000 --cpus 4")
+#############
 
-checkStatus("kubectl get pods --namespace kube-system", "0/1")
+###############
+#while True:
+#  os.system("kubectl get pods --all-namespaces")
+#  time.sleep(3)
+##############
 
+
+time.sleep(60)
+
+
+
+
+##################
 #os.system("kubectl delete --namespace spinnaker -f cassandra.yml")
 #time.sleep(10)
 #os.system("kubectl delete --namespace spinnaker -f front50.yml")
 #time.sleep(10)
 #os.system("kubectl delete namespace spinnaker")
 #time.sleep(5)
+#####################
+
+
+
+
+###################
 os.system("kubectl create namespace spinnaker")
-#time.sleep(5)
+time.sleep(5)
 os.system("kubectl create --namespace spinnaker -f cassandra.yml")
-#time.sleep(10)
-os.system("kubectl expose deployment cassandra --namespace spinnaker --type=NodePort")
-#time.sleep(30)
+time.sleep(10)
+os.system("kubectl expose deployment cassandra --type=NodePort")
+########################
+
+#os.system("kubectl run front50 --image=quay.io/spinnaker/front50 --namespace spinnaker --port=8080")
+
+########
 #os.system("kubectl delete secret front50cfg --namespace spinnaker")
-#os.system("kubectl create secret generic front50cfg --from-file=./config/front50.yml --namespace spinnaker")
-#time.sleep(5)
+###########
+
+
+
+os.system("kubectl create secret generic front50cfg --from-file=./config/front50.yml --namespace spinnaker")
+time.sleep(5)
+
+
+
 os.system("kubectl create --namespace spinnaker -f front50.yml")
 
+#kubectl get pods --all-namespaces --output json
 
+#os.system("minikube dashboard")
 
-os.system("minikube dashboard")
+     #   command:
+     #   - "/bin/bash -c 'sleep 5; /opt/front50/bin/front50'"
