@@ -52,7 +52,7 @@ time.sleep(10)
 poll()
 
 #is this itt?
-#os.system("kubectl expose deployment cassandra --namespace spinnaker --type=NodePort")
+os.system("kubectl expose deployment cassandra --namespace spinnaker --type=NodePort")
 
 
 

@@ -2,7 +2,6 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: spin-stock
-  namespace: spinnaker
 spec:
   replicas: 1
   template:

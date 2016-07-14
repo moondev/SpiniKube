@@ -10,7 +10,7 @@ spec:
         app: spin-front50
     spec:
       containers:
-      - name: spin-ront50
+      - name: spin-front50
         image: quay.io/spinnaker/front50
         ports:
         - containerPort: 8080
