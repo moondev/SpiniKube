@@ -2,11 +2,11 @@
     "kind": "Service",
     "apiVersion": "v1",
     "metadata": {
-        "name": "cassandra"
+        "name": "spin-cassandra"
     },
     "spec": {
         "selector": {
-            "app": "cassandra"
+            "app": "spin-cassandra"
         },
         "ports": [
             {

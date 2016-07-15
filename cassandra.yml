@@ -1,16 +1,16 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: cassandra
+  name: spin-cassandra
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: cassandra
+        app: spin-cassandra
     spec:
       containers:
-      - name: cassandra
+      - name: spin-cassandra
         image: chadmoon/cassandra-spinnaker
         env:
           -
