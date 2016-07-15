@@ -51,8 +51,8 @@ time.sleep(10)
 
 poll()
 
-#is this itt?
-os.system("kubectl expose deployment cassandra --namespace spinnaker --type=NodePort")
+#why would this mess up front50?
+#os.system("kubectl expose deployment cassandra --namespace spinnaker --type=NodePort")
 
 
 
@@ -93,3 +93,8 @@ poll()
 
 
 os.system("minikube dashboard")
+
+
+
+
+####create secret

@@ -1,0 +1,13 @@
+front50 deployment will not start if cassandra deployment is exposed in script with:
+kubectl expose deployment cassandra --namespace spinnaker --type=NodePort
+
+front50 starts if stock quay image is used. able to terminate it and repset restarts fine
+
+if secret added with 
+kubectl create secret generic spinnaker-config --from-file=./config/front50.yml --namespace spinnaker
+and front50 killed it restarts fine
+
+launching mount with secret:
+kubectl create --namespace spinnaker -f front50-secret.yml
+this will read in configs but lag on not finding cassandra since it is not exposed
+

@@ -4,7 +4,7 @@ server:
 cassandra:
   enabled: true
   embedded: false
-  host: cassandra.spinnaker
+  host: cassandra
   keyspace: front50
   cluster: spinnaker
   name: default
@@ -14,7 +14,7 @@ spinnaker:
     enabled: true
     embedded: false
     cluster: spinnaker
-    host: cassandra.spinnaker
+    host: cassandra
     keyspace: front50
     name: default
   redis:
