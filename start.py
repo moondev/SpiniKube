@@ -26,29 +26,28 @@ os.system("kubectl create namespace spinnaker")
 os.system("rm -f minikube")
 os.system("mkdir minikube")
 
-ip = os.popen('minikube ip').read().strip()
+# ip = os.popen('minikube ip').read().strip()
 
-os.system("cp ~/.kube/config minikube/config2")
-
-with open("minikube/config3", "wt") as fout:
-    with open("minikube/config2", "rt") as fin:
-        for line in fin:
-            fout.write(line.replace('/home/chad', '/root'))
+# os.system("cp ~/.kube/config minikube/config2")
 
 with open("minikube/config", "wt") as fout:
-    with open("minikube/config3", "rt") as fin:
-        for line in fin:
-            fout.write(line.replace('.minikube', '.kube'))
-
-time.sleep(1)
-
-os.system("kubectl create secret generic spinnaker-config --from-file=./config/front50.yml --from-file=./config/clouddriver.yml --namespace spinnaker")
-
+  with open("/home/chad/.kube/config", "rt") as fin:
+    for line in fin:
+      fout.write(line.replace('/home/chad', '/root'))
+      fout.write(line.replace('.minikube', '.kube'))
 
 
 os.system("cp ~/.minikube/apiserver.crt minikube/apiserver.crt")
 os.system("cp ~/.minikube/apiserver.key minikube/apiserver.key")
 os.system("cp ~/.minikube/ca.crt minikube/ca.crt")
+
+time.sleep(1)
+
+os.system("kubectl create secret generic spinnaker-config --from-file=./config/rosco.yml --from-file=./config/front50.yml --from-file=./config/clouddriver.yml --namespace spinnaker")
+
+
+
+
 
 os.system("kubectl create secret generic minikube-config --from-file=./minikube/config --from-file=./minikube/ca.crt --from-file=./minikube/apiserver.crt --from-file=./minikube/apiserver.key --namespace spinnaker")
 
@@ -69,6 +68,11 @@ os.system("kubectl create --namespace spinnaker -f services/front50.json")
 os.system("kubectl create --namespace spinnaker -f sets/clouddriver.yml")
 time.sleep(1)
 os.system("kubectl create --namespace spinnaker -f services/clouddriver.json")
+
+os.system("kubectl create --namespace spinnaker -f sets/rosco.yml")
+time.sleep(1)
+os.system("kubectl create --namespace spinnaker -f services/rosco.json")
+
 poll()
 
 os.system("minikube dashboard")

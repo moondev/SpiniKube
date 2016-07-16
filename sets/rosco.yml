@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: spin-rosco
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: spin-rosco
+    spec:
+      volumes:
+      - name: spinnaker-config
+        secret:
+          secretName: spinnaker-config
+      containers:
+      - name: spin-rosco
+        volumeMounts:
+        - mountPath: /opt/rosco/config
+          name: spinnaker-config
+        image: quay.io/spinnaker/rosco
+        ports:
+        - containerPort: 8087

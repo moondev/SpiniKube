@@ -10,7 +10,7 @@ credentials:
   primaryAccountTypes: default
 default:
   account:
-    env: default
+    env: minikube
 dockerRegistry:
   accounts:
   - address: https://index.docker.io
