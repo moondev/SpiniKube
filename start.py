@@ -43,7 +43,7 @@ os.system("cp ~/.minikube/ca.crt minikube/ca.crt")
 
 time.sleep(1)
 
-os.system("kubectl create secret generic spinnaker-config --from-file=./config/rosco.yml --from-file=./config/front50.yml --from-file=./config/clouddriver.yml --namespace spinnaker")
+os.system("kubectl create secret generic spinnaker-config --from-file=./config/gate.yml --from-file=./config/orca.yml --from-file=./config/rosco.yml --from-file=./config/front50.yml --from-file=./config/clouddriver.yml --namespace spinnaker")
 
 
 
@@ -72,6 +72,14 @@ os.system("kubectl create --namespace spinnaker -f services/clouddriver.json")
 os.system("kubectl create --namespace spinnaker -f sets/rosco.yml")
 time.sleep(1)
 os.system("kubectl create --namespace spinnaker -f services/rosco.json")
+
+os.system("kubectl create --namespace spinnaker -f sets/orca.yml")
+time.sleep(1)
+os.system("kubectl create --namespace spinnaker -f services/orca.json")
+
+os.system("kubectl create --namespace spinnaker -f sets/gate.yml")
+time.sleep(1)
+os.system("kubectl create --namespace spinnaker -f services/gate.json")
 
 poll()
 
