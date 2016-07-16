@@ -72,7 +72,7 @@ os.system("kubectl create --namespace spinnaker -f cassandra.yml")
 time.sleep(1)
 os.system("kubectl create --namespace spinnaker -f cassandra-service.json")
 
-os.system("kubectl create --namespace spinnaker -f redis.yml")
+os.system("kubectl create --namespace spinnaker -f spin-redis.yml")
 time.sleep(1)
 os.system("kubectl create --namespace spinnaker -f redis-service.json")
 
