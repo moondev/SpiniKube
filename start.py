@@ -68,21 +68,21 @@ os.system("kubectl create secret generic minikube-config --from-file=./minikube/
 
 
 
-os.system("kubectl create --namespace spinnaker -f cassandra.yml")
+os.system("kubectl create --namespace spinnaker -f sets/cassandra.yml")
 time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f cassandra-service.json")
+os.system("kubectl create --namespace spinnaker -f services/cassandra.json")
 
-os.system("kubectl create --namespace spinnaker -f spin-redis.yml")
+os.system("kubectl create --namespace spinnaker -f sets/redis.yml")
 time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f redis-service.json")
+os.system("kubectl create --namespace spinnaker -f services/redis.json")
 
-os.system("kubectl create --namespace spinnaker -f spin-front50.yml")
+os.system("kubectl create --namespace spinnaker -f sets/front50.yml")
 time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f front50-service.json")
+os.system("kubectl create --namespace spinnaker -f services/front50.json")
 
-os.system("kubectl create --namespace spinnaker -f spin-clouddriver.yml")
+os.system("kubectl create --namespace spinnaker -f sets/clouddriver.yml")
 time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f clouddriver-service.json")
+os.system("kubectl create --namespace spinnaker -f services/clouddriver.json")
 poll()
 
 os.system("minikube dashboard")
