@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: spin-redis
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: spin-redis
+    spec:
+      containers:
+      - name: spin-redis
+        volumeMounts:
+        image: redis
+        ports:
+        - containerPort: 6379

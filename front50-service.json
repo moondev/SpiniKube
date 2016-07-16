@@ -1,0 +1,20 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "spin-front50"
+    },
+    "spec": {
+        "selector": {
+            "app": "spin-front50"
+        },
+        "ports": [
+            {
+                "name": "front50",
+                "protocol": "TCP",
+                "port": 8080,
+                "targetPort": 8080
+            }
+        ]
+    }
+}

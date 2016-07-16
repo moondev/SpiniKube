@@ -1,29 +1,10 @@
 aws:
-  defaultFront50Template: ${services.front50.baseUrl}
-  defaultKeyPairTemplate: ${providers.aws.defaultKeyPairTemplate}
-  defaultRegions:
-  - name: ${providers.aws.defaultRegion:us-east-1}
-  defaults:
-    iamRole: ${provider.aws.defaultIAMRole:BaseIAMRole}
-  enabled: ${providers.aws.enabled:false}
+  enabled: false
 azure:
-  accounts:
-  - appKey: ${providers.azure.primaryCredentials.appKey}
-    clientId: ${providers.azure.primaryCredentials.clientId}
-    name: ${providers.azure.primaryCredentials.name}
-    subscriptionId: ${providers.azure.primaryCredentials.subscriptionId}
-    tenantId: ${providers.azure.primaryCredentials.tenantId}
-  enabled: ${providers.azure.enabled:false}
+  enabled: false
 cf:
   accounts:
-  - api: ${providers.cf.primaryCredentials.api}
-    console: ${providers.cf.primaryCredentials.console}
-    name: ${providers.cf.primaryCredentials.name}
-    org: ${providers.cf.defaultOrg}
-    password: ${providers.cf.account.password:}
-    space: ${providers.cf.defaultSpace}
-    username: ${providers.cf.account.name:}
-  enabled: ${providers.cf.enabled:false}
+  enabled: false
 credentials:
   challengeDestructiveActionsEnvironments: default
   primaryAccountTypes: default
@@ -38,11 +19,7 @@ dockerRegistry:
     - library/nginx
   enabled: true
 google:
-  accounts:
-  - jsonPath: ${providers.google.primaryCredentials.jsonPath}
-    name: ${providers.google.primaryCredentials.name}
-    project: ${providers.google.primaryCredentials.project}
-  enabled: ${providers.google.enabled:false}
+  enabled: false
 kubernetes:
   accounts:
   - dockerRegistries:
@@ -50,11 +27,11 @@ kubernetes:
     name: minikube
   enabled: true
 redis:
-  connection: redis://redis-alias:6379
+  connection: redis://spin-redis:6379
 server:
-  port: ${services.clouddriver.port:7002}
+  port: 7002
 services:
   front50:
-    baseUrl: http://front50-alias:8080
+    baseUrl: http://spin-front50:8080
 udf:
-  enabled: ${services.clouddriver.aws.udf.enabled:true}
+  enabled: false
