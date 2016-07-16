@@ -18,7 +18,7 @@ def poll():
 
 
 os.system("minikube delete")
-os.system("minikube start --memory 8000 --cpus 4")
+os.system("minikube start --memory 8000 --cpus 2")
 time.sleep(10)
 poll()
 os.system("kubectl create namespace spinnaker")
@@ -26,34 +26,19 @@ os.system("kubectl create namespace spinnaker")
 os.system("rm -f minikube")
 os.system("mkdir minikube")
 
-ip = os.popen('minikube ip').read().rstrip()
+ip = os.popen('minikube ip').read().strip()
 
-kubeConfig = """\
-apiVersion: v1
-clusters:
-- cluster:
-    certificate-authority: /root/.kube/apiserver.crt
-    server: https://""" + ip + """:443
-  name: minikube
-contexts:
-- context:
-    cluster: minikube
-    user: minikube
-  name: minikube
-current-context: minikube
-kind: Config
-preferences: {}
-users:
-- name: minikube
-  user:
-    client-certificate: /root/.kube/apiserver.crt
-    client-key: /root/.kube/apiserver.key
-"""
+os.system("cp ~/.kube/config minikube/config2")
 
-with open("minikube/config", "w") as text_file:
-  text_file.write(kubeConfig)
+with open("minikube/config3", "wt") as fout:
+    with open("minikube/config2", "rt") as fin:
+        for line in fin:
+            fout.write(line.replace('/home/chad', '/root'))
 
-
+with open("minikube/config", "wt") as fout:
+    with open("minikube/config3", "rt") as fin:
+        for line in fin:
+            fout.write(line.replace('.minikube', '.kube'))
 
 time.sleep(1)
 
@@ -63,8 +48,9 @@ os.system("kubectl create secret generic spinnaker-config --from-file=./config/f
 
 os.system("cp ~/.minikube/apiserver.crt minikube/apiserver.crt")
 os.system("cp ~/.minikube/apiserver.key minikube/apiserver.key")
+os.system("cp ~/.minikube/ca.crt minikube/ca.crt")
 
-os.system("kubectl create secret generic minikube-config --from-file=./minikube/config --from-file=./minikube/apiserver.crt --from-file=./minikube/apiserver.key --namespace spinnaker")
+os.system("kubectl create secret generic minikube-config --from-file=./minikube/config --from-file=./minikube/ca.crt --from-file=./minikube/apiserver.crt --from-file=./minikube/apiserver.key --namespace spinnaker")
 
 
 
