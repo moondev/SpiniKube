@@ -1,13 +1,13 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: spin-deck
+  name: spin-deck-done
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: spin-deck
+        app: spin-deck-done
     spec:
       volumes:
       - name: deck-build
@@ -29,7 +29,6 @@ spec:
           - "/bin/sh"
           - "-c"
           - "npm install; npm run build; mv build/webpack /deckbuild/deck; npm start"
-        restartPolicy: Never
       - name: deck-serve
         volumeMounts:
         - mountPath: /opt
