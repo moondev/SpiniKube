@@ -29,6 +29,7 @@ spec:
           - "/bin/sh"
           - "-c"
           - "npm install; npm run build; mv build/webpack /deckbuild/deck; npm start"
+        restartPolicy: Never
       - name: deck-serve
         volumeMounts:
         - mountPath: /opt

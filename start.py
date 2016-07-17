@@ -18,6 +18,7 @@ def poll():
 
 
 os.system("minikube delete")
+time.sleep(5)
 os.system("minikube start --memory 8000 --cpus 2")
 time.sleep(10)
 poll()
@@ -27,20 +28,40 @@ os.system("rm minikube/apiserver.crt")
 os.system("rm minikube/apiserver.key")
 os.system("rm minikube/ca.crt")
 
-# ip = os.popen('minikube ip').read().strip()
-
-# os.system("cp ~/.kube/config minikube/config2")
-
-# with open("minikube/config", "wt") as fout:
-#   with open("/home/chad/.kube/config", "rt") as fin:
-#     for line in fin:
-#       fout.write(line.replace('/home/chad', '/root'))
-#       fout.write(line.replace('.minikube', '.kube'))
 
 
+os.system("rm -f minikube")
+os.system("mkdir minikube")
 os.system("cp ~/.minikube/apiserver.crt minikube/apiserver.crt")
 os.system("cp ~/.minikube/apiserver.key minikube/apiserver.key")
 os.system("cp ~/.minikube/ca.crt minikube/ca.crt")
+
+ip = os.popen('minikube ip').read().strip()
+
+kubeConfig = """
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /root/.kube/ca.crt
+    server: https://""" + ip + """:8443
+  name: minikube
+contexts:
+- context:
+    cluster: minikube
+    user: minikube
+  name: minikube
+current-context: minikube
+kind: Config
+preferences: {}
+users:
+- name: minikube
+  user:
+    client-certificate: /root/.kube/apiserver.crt
+    client-key: /root/.kube/apiserver.key
+"""
+
+with open("minikube/config", "w") as text_file:
+  text_file.write(kubeConfig)
 
 time.sleep(1)
 
@@ -93,6 +114,15 @@ os.system('kubectl expose deployment spin-deck --namespace spinnaker --type=Node
 poll()
 
 os.system("minikube dashboard")
+
+
+
+time.sleep(10)
+
 os.system('minikube service spin-deck --namespace spinnaker')
 
+
+os.system("kubectl create -f kubedash/bundle.yaml")
+os.system("kubectl create -f heapster/kube-config/influxdb/")
+os.system('minikube service kubedash --namespace kube-system')
 #mount -t vboxsf hosthome /hosthome
