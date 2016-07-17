@@ -11,6 +11,18 @@ credentials:
 default:
   account:
     env: minikube
+
+
+
+google:
+  enabled: false
+kubernetes:
+  enabled: true
+  accounts:
+    - name: my-kubernetes-account
+      dockerRegistries:
+        - accountName: dockerhub
+
 dockerRegistry:
   accounts:
   - address: https://index.docker.io
@@ -18,14 +30,7 @@ dockerRegistry:
     repositories:
     - library/nginx
   enabled: true
-google:
-  enabled: false
-kubernetes:
-  accounts:
-  - dockerRegistries:
-    - accountName: dockerhub
-    name: minikube
-  enabled: true
+
 redis:
   connection: redis://spin-redis:6379
 server:

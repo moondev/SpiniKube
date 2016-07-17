@@ -5,7 +5,7 @@ bakery:
   propagateCloudProviderType: true
 default:
   bake:
-    account: default
+    account: minikube
   securityGroups: null
   vpc:
     securityGroups: null
