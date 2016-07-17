@@ -51,6 +51,7 @@ os.system("kubectl create secret generic spinnaker-config --from-file=./config/g
 
 os.system("kubectl create secret generic minikube-config --from-file=./minikube/config --from-file=./minikube/ca.crt --from-file=./minikube/apiserver.crt --from-file=./minikube/apiserver.key --namespace spinnaker")
 
+os.system("kubectl create secret generic nginx-config --from-file=./config/nginx.conf --namespace spinnaker")
 
 
 os.system("kubectl create --namespace spinnaker -f sets/cassandra.yml")
@@ -81,7 +82,16 @@ os.system("kubectl create --namespace spinnaker -f sets/gate.yml")
 time.sleep(1)
 os.system("kubectl create --namespace spinnaker -f services/gate.json")
 
+os.system("minikube ssh 'sudo mount -t vboxsf hosthome /hosthome''")
+
+os.system("kubectl create --namespace spinnaker -f sets/deck.yml")
+time.sleep(1)
+os.system('kubectl expose deployment spin-deck --namespace spinnaker --type=NodePort')
+
+
 poll()
 
 os.system("minikube dashboard")
+os.system('minikube service spin-deck --namespace spinnaker')
 
+#mount -t vboxsf hosthome /hosthome

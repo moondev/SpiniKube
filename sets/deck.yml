@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: spin-deck
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: spin-deck
+    spec:
+      volumes:
+      - name: deck-code
+        hostPath:
+          path: /hosthome/chad/spinnaker-kubernetes/deck
+      containers:
+      - name: spin-deck
+        volumeMounts:
+        - mountPath: /opt/deck
+          name: deck-code
+        image: chadmoon/spinnaker-nginx
+        ports:
+        - containerPort: 80
