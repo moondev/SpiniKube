@@ -1,0 +1,21 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "spin-deck"
+    },
+    "spec": {
+        "selector": {
+            "app": "spin-deck"
+        },
+        "type": "NodePort",
+        "ports": [
+            {
+                "name": "deck",
+                "protocol": "TCP",
+                "port": 80,
+                "targetPort": 80
+            }
+        ]
+    }
+}

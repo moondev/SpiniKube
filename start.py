@@ -5,7 +5,7 @@ import collections
 import subprocess
 
 def cmdOut(cmd):
-  return subprocess.check_output(cmd, shell=True)
+  return subprocess.check_output(cmd, shell=True).strip()
 
 def poll():
   creating = "ContainerCreating"
@@ -76,19 +76,19 @@ time.sleep(1)
 
 os.system("kubectl create secret generic spinnaker-config --from-file=./config/echo.yml --from-file=./config/igor.yml --from-file=./config/gate.yml --from-file=./config/orca.yml --from-file=./config/rosco.yml --from-file=./config/front50.yml --from-file=./config/clouddriver.yml --namespace spinnaker")
 
-
 os.system("kubectl create secret generic minikube-config --from-file=./minikube/config --from-file=./minikube/ca.crt --from-file=./minikube/apiserver.crt --from-file=./minikube/apiserver.key --namespace spinnaker")
 
 os.system("kubectl create secret generic nginx-config --from-file=./config/nginx.conf --namespace spinnaker")
 
+os.system("kubectl create secret generic panel-config --from-file=./panel/index.html --from-file=./panel/services.json --namespace spinnaker")
 
+components = ('cassandra', 'redis', 'front50' 'clouddriver', 'rosco', 'orca', 'echo', 'igor', 'gate', 'deck')
 
-os.system("kubectl create --namespace spinnaker -f sets/")
-time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f services/")
-
-time.sleep(1)
-os.system('kubectl expose deployment spin-deck --namespace spinnaker --type=NodePort')
+for component in components:
+  os.system("kubectl create --namespace spinnaker -f sets/" + component + ".yml")
+  time.sleep(1)
+  os.system("kubectl create --namespace spinnaker -f services/" + component + ".json")
+  time.sleep(1)
 
 os.system("kubectl create -f kubedash/bundle.yaml")
 
@@ -96,10 +96,13 @@ os.system("kubectl create -f tectonic/coreos-pull-secret.yml")
 os.system("kubectl create -f tectonic/tectonic-console.yaml")
 os.system("kubectl create -f tectonic/tectonic.json")
 
+time.sleep(5)
+
+os.system("kubectl create --namespace spinnaker -f sets/panel.yml")
+time.sleep(1)
+os.system("kubectl create --namespace spinnaker -f services/panel.json")
+time.sleep(1)
+
 poll()
 
-os.system("minikube dashboard")
-
-os.system('minikube service spin-deck --namespace spinnaker')
-os.system('minikube service kubedash --namespace kube-system')
-os.system('minikube service tectonic')
+os.system('minikube service spin-panel --namespace spinnaker')

@@ -1,0 +1,21 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "spin-panel"
+    },
+    "spec": {
+        "selector": {
+            "app": "spin-panel"
+        },
+        "type": "NodePort",
+        "ports": [
+            {
+                "name": "panel",
+                "protocol": "TCP",
+                "port": 80,
+                "targetPort": 80
+            }
+        ]
+    }
+}

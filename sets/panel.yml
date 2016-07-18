@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: spin-panel
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: spin-panel
+    spec:
+      volumes:
+      - name: panel-config
+        secret:
+          secretName: panel-config
+      containers:
+      - name: spin-panel
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: panel-config
+        image: nginx
+        ports:
+        - containerPort: 80
