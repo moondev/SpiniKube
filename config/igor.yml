@@ -5,7 +5,7 @@ jenkins:
   enabled: true
   masters:
     - name: jenkins
-      address: http://spin-jenkins:8080
+      address: http://10.20.70.102:8080
       username: jenkins
       password: jenkins
 

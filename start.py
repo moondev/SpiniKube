@@ -81,8 +81,7 @@ os.system("kubectl create secret generic minikube-config --from-file=./minikube/
 
 os.system("kubectl create secret generic nginx-config --from-file=./config/nginx.conf --namespace spinnaker")
 
-os.system("kubectl create -f tectonic/coreos-pull-secret.yml")
-os.system("kubectl create -f tectonic/tectonic-console.yaml")
+
 
 os.system("kubectl create --namespace spinnaker -f sets/")
 time.sleep(1)
@@ -92,6 +91,10 @@ time.sleep(1)
 os.system('kubectl expose deployment spin-deck --namespace spinnaker --type=NodePort')
 
 os.system("kubectl create -f kubedash/bundle.yaml")
+
+os.system("kubectl create -f tectonic/coreos-pull-secret.yml")
+os.system("kubectl create -f tectonic/tectonic-console.yaml")
+os.system("kubectl create -f tectonic/tectonic.json")
 
 poll()
 
