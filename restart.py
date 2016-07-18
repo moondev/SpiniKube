@@ -65,6 +65,7 @@ os.system("kubectl create --namespace spinnaker -f services/gate.json")
 
 
 
+
 poll()
 
 #os.system("minikube dashboard")

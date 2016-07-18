@@ -82,7 +82,7 @@ os.system("kubectl create secret generic nginx-config --from-file=./config/nginx
 
 
 
-components = ('cassandra', 'redis', 'front50' 'clouddriver', 'rosco', 'orca', 'echo', 'igor', 'gate', 'deck')
+components = ('cassandra', 'redis', 'front50' 'clouddriver', 'rosco', 'orca', 'gate')
 
 for component in components:
   os.system("kubectl create --namespace spinnaker -f sets/" + component + ".yml")
@@ -98,8 +98,8 @@ os.system("kubectl create -f tectonic/tectonic.json")
 
 time.sleep(5)
 
-
-
+os.system("kubectl create -f sets/deck.yml --namespace spinnaker")
+os.system("kubectl expose deployment spin-deck --namespace spinnaker --type=NodePort")
 
 services = '''
 {
@@ -158,6 +158,9 @@ time.sleep(1)
 os.system("kubectl create --namespace spinnaker -f services/panel.json")
 time.sleep(1)
 
+
+
 poll()
 
 os.system('minikube service spin-panel --namespace spinnaker')
+os.system('minikube service spin-deck --namespace spinnaker')
