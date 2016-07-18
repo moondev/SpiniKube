@@ -1,0 +1,21 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "spin-jenkins"
+    },
+    "spec": {
+        "selector": {
+            "app": "spin-jenkins"
+        },
+        "type": "NodePort",
+        "ports": [
+            {
+                "name": "jenkins",
+                "protocol": "TCP",
+                "port": 8080,
+                "targetPort": 8080
+            }
+        ]
+    }
+}

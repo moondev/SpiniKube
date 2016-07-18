@@ -1,0 +1,20 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "spin-echo"
+    },
+    "spec": {
+        "selector": {
+            "app": "spin-echo"
+        },
+        "ports": [
+            {
+                "name": "echo",
+                "protocol": "TCP",
+                "port": 8089,
+                "targetPort": 8089
+            }
+        ]
+    }
+}

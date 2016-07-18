@@ -16,12 +16,20 @@ def poll():
     print "\nwaiting for services to start..."
     time.sleep(2)
 
+#os.system("wget https://storage.googleapis.com/kubernetes-release/release/v1.2.4/bin/linux/amd64/kubectl")
+#os.system("chmod +x kubectl")
+#os.system("mv kubectl /usr/local/bin/kubectl")
+
 
 os.system("minikube delete")
 time.sleep(5)
 os.system("minikube start --memory 8000 --cpus 2")
 time.sleep(10)
 poll()
+
+
+
+
 os.system("kubectl create namespace spinnaker")
 
 os.system("rm minikube/apiserver.crt")
@@ -30,7 +38,8 @@ os.system("rm minikube/ca.crt")
 
 
 
-os.system("rm -f minikube")
+
+os.system("rm -rf minikube")
 os.system("mkdir minikube")
 os.system("cp ~/.minikube/apiserver.crt minikube/apiserver.crt")
 os.system("cp ~/.minikube/apiserver.key minikube/apiserver.key")
@@ -65,64 +74,29 @@ with open("minikube/config", "w") as text_file:
 
 time.sleep(1)
 
-os.system("kubectl create secret generic spinnaker-config --from-file=./config/gate.yml --from-file=./config/orca.yml --from-file=./config/rosco.yml --from-file=./config/front50.yml --from-file=./config/clouddriver.yml --namespace spinnaker")
-
-
-
+os.system("kubectl create secret generic spinnaker-config --from-file=./config/echo.yml --from-file=./config/igor.yml --from-file=./config/gate.yml --from-file=./config/orca.yml --from-file=./config/rosco.yml --from-file=./config/front50.yml --from-file=./config/clouddriver.yml --namespace spinnaker")
 
 
 os.system("kubectl create secret generic minikube-config --from-file=./minikube/config --from-file=./minikube/ca.crt --from-file=./minikube/apiserver.crt --from-file=./minikube/apiserver.key --namespace spinnaker")
 
 os.system("kubectl create secret generic nginx-config --from-file=./config/nginx.conf --namespace spinnaker")
 
+os.system("kubectl create -f tectonic/coreos-pull-secret.yml")
+os.system("kubectl create -f tectonic/tectonic-console.yaml")
 
-os.system("kubectl create --namespace spinnaker -f sets/cassandra.yml")
+os.system("kubectl create --namespace spinnaker -f sets/")
 time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f services/cassandra.json")
+os.system("kubectl create --namespace spinnaker -f services/")
 
-os.system("kubectl create --namespace spinnaker -f sets/redis.yml")
-time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f services/redis.json")
-
-os.system("kubectl create --namespace spinnaker -f sets/front50.yml")
-time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f services/front50.json")
-
-os.system("kubectl create --namespace spinnaker -f sets/clouddriver.yml")
-time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f services/clouddriver.json")
-
-os.system("kubectl create --namespace spinnaker -f sets/rosco.yml")
-time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f services/rosco.json")
-
-os.system("kubectl create --namespace spinnaker -f sets/orca.yml")
-time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f services/orca.json")
-
-os.system("kubectl create --namespace spinnaker -f sets/gate.yml")
-time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f services/gate.json")
-
-#os.system("minikube ssh 'sudo mount -t vboxsf hosthome /hosthome''")
-
-os.system("kubectl create --namespace spinnaker -f sets/deck.yml")
 time.sleep(1)
 os.system('kubectl expose deployment spin-deck --namespace spinnaker --type=NodePort')
 
+os.system("kubectl create -f kubedash/bundle.yaml")
 
 poll()
 
 os.system("minikube dashboard")
 
-
-
-time.sleep(10)
-
 os.system('minikube service spin-deck --namespace spinnaker')
-
-
-os.system("kubectl create -f kubedash/bundle.yaml")
-os.system("kubectl create -f heapster/kube-config/influxdb/")
 os.system('minikube service kubedash --namespace kube-system')
-#mount -t vboxsf hosthome /hosthome
+os.system('minikube service tectonic')

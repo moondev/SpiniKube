@@ -1,46 +1,43 @@
 cassandra:
-  embedded: false
   enabled: true
-  host: cassandra-alias
+  embedded: false
+  host: spin-cassandra
+  keyspace: 'echo'
+  cluster: 'Test Cluster'
+  name: default
+
 endpoints.health.sensitive: false
 front50:
-  baseUrl: http://front50-alias:8080
+  baseUrl: http://spin-front50:8080
 hipchat:
-  baseUrl: ${services.echo.notifications.hipchat.url}
-  enabled: ${services.echo.notifications.hipchat.enabled:false}
-  token: ${services.echo.notifications.hipchat.token}
+  enabled: false
 mail:
-  enabled: ${services.echo.notifications.mail.enabled:false}
-  from: ${services.echo.notifications.mail.fromAddress}
-  host: ${services.echo.notifications.mail.host}
+  enabled: false
 orca:
-  baseUrl: http://orca-alias:8083
+  baseUrl: http://spin-orca:8083
 scheduler:
   cron:
-    timezone: ${services.echo.cron.timezone}
-  enabled: ${services.echo.cron.enabled:true}
+    timezone: west
+  enabled: true
   pipelineConfigsPoller:
     enabled: true
     pollingIntervalMs: 30000
   threadPoolSize: 20
   triggeringEnabled: true
 server:
-  port: ${services.echo.port:8089}
+  port: 8089
 slack:
-  enabled: ${services.echo.notifications.slack.enabled:false}
-  token: ${services.echo.notifications.slack.token}
+  enabled: false
 spinnaker:
-  baseUrl: ${services.deck.baseUrl}
   cassandra:
-    enabled: ${services.echo.cassandra.enabled:true}
-  inMemory:
-    enabled: ${services.echo.inMemory.enabled:false}
+    enabled: true
+    embedded: false
+    cluster: 'Test Cluster'
+    host: spin-cassandra
+    keyspace: 'front50'
+    name: default
 spring:
   mail:
-    host: ${mail.host}
+    host: host
 twilio:
-  account: ${services.echo.notifications.sms.account}
-  baseUrl: ${services.echo.notifications.sms.url:https://api.twilio.com/}
-  enabled: ${services.echo.notifications.sms.enabled:false}
-  from: ${services.echo.notifications.sms.from}
-  token: ${services.echo.notifications.sms.token}
+  enabled: false

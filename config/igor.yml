@@ -1,0 +1,25 @@
+server:
+  port: 8088
+
+jenkins:
+  enabled: true
+  masters:
+    - name: jenkins
+      address: http://spin-jenkins:8080
+      username: jenkins
+      password: jenkins
+
+travis:
+  enabled: false
+
+dockerRegistry:
+  enabled: true
+
+redis:
+  connection: redis://spin-redis:6379
+
+services:
+  clouddriver:
+    baseUrl: spin-clouddriver:7002
+  echo:
+    baseUrl: spin-echo:8089
