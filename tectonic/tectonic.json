@@ -1,0 +1,21 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "tectonic"
+    },
+    "spec": {
+        "selector": {
+            "tectonic-app": "console"
+        },
+        "type": "NodePort",
+        "ports": [
+            {
+                "name": "tectonic",
+                "protocol": "TCP",
+                "port": 9000,
+                "targetPort": 9000
+            }
+        ]
+    }
+}

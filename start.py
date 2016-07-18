@@ -80,7 +80,7 @@ os.system("kubectl create secret generic minikube-config --from-file=./minikube/
 
 os.system("kubectl create secret generic nginx-config --from-file=./config/nginx.conf --namespace spinnaker")
 
-os.system("kubectl create secret generic panel-config --from-file=./panel/index.html --from-file=./panel/services.json --namespace spinnaker")
+
 
 components = ('cassandra', 'redis', 'front50' 'clouddriver', 'rosco', 'orca', 'echo', 'igor', 'gate', 'deck')
 
@@ -92,11 +92,66 @@ for component in components:
 
 os.system("kubectl create -f kubedash/bundle.yaml")
 
-os.system("kubectl create -f tectonic/coreos-pull-secret.yml")
+os.system("kubectl create -f tectonic/pull.yml")
 os.system("kubectl create -f tectonic/tectonic-console.yaml")
 os.system("kubectl create -f tectonic/tectonic.json")
 
 time.sleep(5)
+
+
+
+
+services = '''
+{
+"services" : [
+    {
+    "title": "Kubernetes Dashboard",
+    "description": "Management UI",
+    "link": "localhost"
+    },
+
+    {
+    "title": "Kubedash",
+    "description": "Performance analytics UI",
+    "link": "localhost"
+    },
+
+    {
+    "title": "Jenkins",
+    "description": "Automation Server",
+    "link": "localhost"
+    },
+
+
+    {
+    "title": "Tectonic Console",
+    "description": "Alternative management UI",
+    "link": "localhost"
+    },
+
+        {
+    "title": "Spinnaker",
+    "description": "Spinnaker UI",
+    "link": "localhost"
+    },
+
+            {
+    "title": "Portus",
+    "description": "private container registry",
+    "link": "localhost"
+    }
+
+]
+}
+'''
+
+os.system("rm -f panel/services.json")
+
+with open("panel/services.json", "w") as text_file:
+  text_file.write(services)
+
+
+os.system("kubectl create secret generic panel-config --from-file=./panel/index.html --from-file=./panel/services.json --namespace spinnaker")
 
 os.system("kubectl create --namespace spinnaker -f sets/panel.yml")
 time.sleep(1)

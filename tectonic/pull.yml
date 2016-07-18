@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: coreos-pull-secret
+data:
+  .dockercfg: eyJxdWF5LmlvIjp7ImF1dGgiOiJZMjl5Wlc5ekszUmxZekpmYVdaaWRXZHNhblpuWW1GMGEzSnllbWR4ZVdNeWJXdGpaem94TTFWUVZURXhPREJPUWpjMVRqUTBSRGc1VnpGS1ZqWXpNMDVSVlVvd05FZ3pNekkxVjFjM05GRk5VME13UlVGRVVGUllUVXBPU0ZoQ1NGRkpNMHRWIiwiZW1haWwiOiIifX0=
+type: kubernetes.io/dockercfg
