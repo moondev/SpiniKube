@@ -34,7 +34,7 @@
 
   <div class="ui fixed inverted menu">
     <div id="tabs" class="ui container">
-      <a href="#" class="header item">
+      <a id="logo" href="#" class="nav header item">
         SpiniKube
       </a>
 
@@ -43,8 +43,81 @@
     </div>
   </div>
 
+   <div id="home" style="width:1127px;margin-left:auto;margin-right:auto;" class="ui text">
+     <br /><br />
+<h2>Welcome to SpiniKube!</h2>
+<p>The following is a description of each component that can be found in the top menu.</p>
+<div id="services" class="ui cards">
 
-    <div style="position:absolute;top:40px;bottom:0px;left:0px;right:0px;">
+   <div class="card">
+    <div class="content">
+      <div class="header">Spinnaker Dashboard</div>
+      <div class="description">
+        Management UI
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <div class="content">
+      <div class="header">Kubernetes Dashboard</div>
+      <div class="description">
+        Management UI
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="content">
+      <div class="header">Kubedash</div>
+      <div class="description">
+        Performance analytics UI.
+      </div>
+    </div>
+  </div>
+
+  
+
+    <div class="card">
+    <div class="content">
+      <div class="header">Jenkins</div>
+      <div class="description">
+        Automation Server
+      </div>
+    </div>
+  </div>
+
+ <div class="card">
+    <div class="content">
+      <div class="header">Portus</div>
+      <div class="description">
+        Private Docker Registry UI
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="card">
+    <div class="content">
+      <div class="header">Tectonic Console</div>
+      <div class="description">
+        Alternative management UI
+      </div>
+    </div>
+  </div>
+
+
+
+
+</div>
+
+  </div>
+
+
+
+    <div id="framebox" style="display:none;position:absolute;top:40px;bottom:0px;left:0px;right:0px;">
     <iframe id="frame" style="width:100%;height:100%;border:none;"></iframe>
    </div>
 
@@ -68,7 +141,20 @@ $.getJSON( "/services.json", function( data ) {
   });
 
   $('.nav').click(function(){
-    $('#frame').attr('src',$(this).attr('href'));
+    
+     $('.nav').removeClass('active');
+     $(this).addClass('active');
+
+    if($(this).attr('id') == 'logo'){
+       $('#framebox').hide();
+       $('#home').show();
+    }else{
+       $('#home').hide();
+       $('#framebox').show();
+       $('#frame').attr('src',$(this).attr('href'));
+    }
+
+    
     return false;
 
   });
