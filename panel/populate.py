@@ -10,17 +10,25 @@ def cmdOut(cmd):
 services = '''
 {
 "services" : [
+
+          {
+    "title": "Spinnaker Dashboard",
+    "description": "Spinnaker UI",
+    "link": "''' + cmdOut("minikube service spin-deck --namespace spinnaker --url") + '''"
+    },
+
     {
     "title": "Kubernetes Dashboard",
     "description": "Management UI",
     "link": "''' + cmdOut("minikube service kubernetes-dashboard --namespace kube-system --url") + '''"
     },
 
-    {
-    "title": "Kubedash",
-    "description": "Performance analytics UI",
-    "link": "''' + cmdOut("minikube service kubedash --namespace kube-system --url") + '''"
+        {
+    "title": "Tectonic Console",
+    "description": "Alternative management UI",
+    "link": "''' + cmdOut("minikube service tectonic --url") + '''"
     },
+
 
     {
     "title": "Jenkins",
@@ -28,24 +36,13 @@ services = '''
     "link": "''' + cmdOut("minikube service spin-deck --namespace spinnaker --url") + '''"
     },
 
-
-    {
-    "title": "Tectonic Console",
-    "description": "Alternative management UI",
-    "link": "''' + cmdOut("minikube service tectonic --url") + '''"
-    },
-
         {
-    "title": "Spinnaker",
-    "description": "Spinnaker UI",
-    "link": "''' + cmdOut("minikube service spin-deck --namespace spinnaker --url") + '''"
-    },
-
-            {
-    "title": "Portus",
-    "description": "private container registry",
-    "link": "localhost"
+    "title": "Cluster Performace",
+    "description": "Performance analytics UI",
+    "link": "''' + cmdOut("minikube service kubedash --namespace kube-system --url") + '''"
     }
+
+
 
 ]
 }

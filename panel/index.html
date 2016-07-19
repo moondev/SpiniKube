@@ -1,22 +1,11 @@
 
 <!DOCTYPE html>
-<!--[if lte IE 9]>
-<html class="ie" lang="en">
-<![endif]-->
-<!--[if gt IE 9]><!-->
-<html lang="en">
-<!--<![endif]-->
-
+<html>
 <head>
-
-  <meta charset="UTF-8">
-
-  
-
-  
-
-  <title>Panel</title>
-
+  <!-- Standard Meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css">
 
@@ -24,73 +13,44 @@
 
 
 
+  <style type="text/css">
+  body {
+    background-color: #FFFFFF;
+  }
+  .ui.menu .item img.logo {
+    margin-right: 1.5em;
+  }
+  .main.container {
+    margin-top: 7em;
+  }
+  .wireframe {
+    margin-top: 2em;
+  }
 
+  </style>
 
 </head>
+<body style="overflow:hidden;">
 
-<body>
-<br /><br />
-<div class="ui text container">
+  <div class="ui fixed inverted menu">
+    <div id="tabs" class="ui container">
+      <a href="#" class="header item">
+        SpiniKube
+      </a>
 
 
-<div id="services" class="ui link cards">
 
-<!--
-  <div class="card">
-    <div class="content">
-      <div class="header">Kubernetes Dashboard</div>
-      <div class="description">
-        Management UI
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="content">
-      <div class="header">Kubedash</div>
-      <div class="description">
-        Performance analytics UI.
-      </div>
-    </div>
-  </div>
-
-  
-
-    <div class="card">
-    <div class="content">
-      <div class="header">Jenkins</div>
-      <div class="description">
-        Automation Server
-      </div>
-    </div>
-  </div>
-
- <div class="card">
-    <div class="content">
-      <div class="header">Portus</div>
-      <div class="description">
-        Private Docker Registry UI
-      </div>
     </div>
   </div>
 
 
-
-  <div class="card">
-    <div class="content">
-      <div class="header">Tectonic Console</div>
-      <div class="description">
-        Alternative management UI
-      </div>
-    </div>
-  </div>
+    <div style="position:absolute;top:40px;bottom:0px;left:0px;right:0px;">
+    <iframe id="frame" style="width:100%;height:100%;border:none;"></iframe>
+   </div>
 
 
--->
 
-</div>
-
-  </div>
+</body>
 
   <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
   
@@ -104,16 +64,24 @@ $(document).ready(function(){
 $.getJSON( "/services.json", function( data ) {
 
   $.each( data.services, function( key, val ) {
-    $("#services").append('<div class="card"><a href="' + val.link + '"><div class="content"><div class="header">' + val.link + '</div><div class="description">Management UI</div></div></div>');
+    $("#tabs").append('<a href="' + val.link + '" class="nav item">' + val.title + '</a>');
+  });
+
+  $('.nav').click(function(){
+    alert('hello');
+    $('#frame').attr('src',$(this).attr('href'));
+    return false;
+
   });
  
+
 });
+
+
 
 });
 
 
 </script>
-
-</body>
 
 </html>
