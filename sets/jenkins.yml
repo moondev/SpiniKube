@@ -14,3 +14,6 @@ spec:
         image: chadmoon/jenkins
         ports:
         - containerPort: 8080
+        resources: 
+          limits: 
+            memory: 500Mi

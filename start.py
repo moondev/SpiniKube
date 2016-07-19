@@ -26,7 +26,7 @@ def poll():
 
 os.system("minikube delete")
 time.sleep(5)
-os.system("minikube start --memory 8000 --cpus 2")
+os.system("minikube start --memory 6000 --cpus 2")
 time.sleep(10)
 poll()
 
