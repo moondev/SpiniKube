@@ -1,2 +1,3 @@
-1. Ensure virtualbox is installed, minikube installed and kubectl is on path
-2. `python start.py`
+## SpiniKube = Spinnaker + MiniKube
+### Easily setup Spinnaker running on a local Kubernetes cluster
+
