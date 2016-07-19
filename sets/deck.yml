@@ -9,6 +9,7 @@ spec:
       labels:
         app: spin-deck
     spec:
+      restartPolicy: Never
       volumes:
       - name: deck-build
         emptyDir: {}

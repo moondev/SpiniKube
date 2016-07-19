@@ -1,3 +1,6 @@
+
+#!/usr/local/bin/python
+
 import yaml
 import os
 import time
@@ -84,11 +87,40 @@ os.system("kubectl create secret generic nginx-config --from-file=./config/nginx
 
 components = ('cassandra', 'redis', 'front50' 'clouddriver', 'rosco', 'orca', 'gate')
 
-for component in components:
-  os.system("kubectl create --namespace spinnaker -f sets/" + component + ".yml")
-  time.sleep(1)
-  os.system("kubectl create --namespace spinnaker -f services/" + component + ".json")
-  time.sleep(1)
+os.system("kubectl create --namespace spinnaker -f sets/cassandra.yml")
+time.sleep(1)
+os.system("kubectl create --namespace spinnaker -f services/cassandra.json")
+time.sleep(1)
+
+os.system("kubectl create --namespace spinnaker -f sets/redis.yml")
+time.sleep(1)
+os.system("kubectl create --namespace spinnaker -f services/redis.json")
+time.sleep(1)
+
+os.system("kubectl create --namespace spinnaker -f sets/front50.yml")
+time.sleep(1)
+os.system("kubectl create --namespace spinnaker -f services/front50.json")
+time.sleep(1)
+
+os.system("kubectl create --namespace spinnaker -f sets/clouddriver.yml")
+time.sleep(1)
+os.system("kubectl create --namespace spinnaker -f services/clouddriver.json")
+time.sleep(1)
+
+os.system("kubectl create --namespace spinnaker -f sets/rosco.yml")
+time.sleep(1)
+os.system("kubectl create --namespace spinnaker -f services/rosco.json")
+time.sleep(1)
+
+os.system("kubectl create --namespace spinnaker -f sets/orca.yml")
+time.sleep(1)
+os.system("kubectl create --namespace spinnaker -f services/orca.json")
+time.sleep(1)
+
+os.system("kubectl create --namespace spinnaker -f sets/gate.yml")
+time.sleep(1)
+os.system("kubectl create --namespace spinnaker -f services/gate.json")
+time.sleep(1)
 
 os.system("kubectl create -f kubedash/bundle.yaml")
 
