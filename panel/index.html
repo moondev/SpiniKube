@@ -33,9 +33,9 @@
 <div class="ui text container">
 
 
-<div class="ui link cards">
+<div id="services" class="ui link cards">
 
-
+<!--
   <div class="card">
     <div class="content">
       <div class="header">Kubernetes Dashboard</div>
@@ -86,13 +86,33 @@
   </div>
 
 
-
+-->
 
 </div>
 
   </div>
+
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
   
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.js"></script>
+
+<script>
+
+$(document).ready(function(){
+
+
+$.getJSON( "/services.json", function( data ) {
+
+  $.each( data.services, function( key, val ) {
+    $("#services").append('<div class="card"><a href="' + val.link + '"><div class="content"><div class="header">' + val.link + '</div><div class="description">Management UI</div></div></div>');
+  });
+ 
+});
+
+});
+
+
+</script>
 
 </body>
 

@@ -83,8 +83,6 @@ os.system("kubectl create secret generic minikube-config --from-file=./minikube/
 
 os.system("kubectl create secret generic nginx-config --from-file=./config/nginx.conf --namespace spinnaker")
 
-
-
 components = ('cassandra', 'redis', 'front50' 'clouddriver', 'rosco', 'orca', 'gate')
 
 os.system("kubectl create --namespace spinnaker -f sets/cassandra.yml")
@@ -122,6 +120,11 @@ time.sleep(1)
 os.system("kubectl create --namespace spinnaker -f services/gate.json")
 time.sleep(1)
 
+os.system("kubectl create --namespace spinnaker -f sets/jenkins.yml")
+time.sleep(1)
+os.system("kubectl create --namespace spinnaker -f services/jenkins.json")
+time.sleep(1)
+
 os.system("kubectl create -f kubedash/bundle.yaml")
 
 os.system("kubectl create -f tectonic/pull.yml")
@@ -133,55 +136,7 @@ time.sleep(5)
 os.system("kubectl create -f sets/deck.yml --namespace spinnaker")
 os.system("kubectl expose deployment spin-deck --namespace spinnaker --type=NodePort")
 
-services = '''
-{
-"services" : [
-    {
-    "title": "Kubernetes Dashboard",
-    "description": "Management UI",
-    "link": "localhost"
-    },
-
-    {
-    "title": "Kubedash",
-    "description": "Performance analytics UI",
-    "link": "localhost"
-    },
-
-    {
-    "title": "Jenkins",
-    "description": "Automation Server",
-    "link": "localhost"
-    },
-
-
-    {
-    "title": "Tectonic Console",
-    "description": "Alternative management UI",
-    "link": "localhost"
-    },
-
-        {
-    "title": "Spinnaker",
-    "description": "Spinnaker UI",
-    "link": "localhost"
-    },
-
-            {
-    "title": "Portus",
-    "description": "private container registry",
-    "link": "localhost"
-    }
-
-]
-}
-'''
-
-os.system("rm -f panel/services.json")
-
-with open("panel/services.json", "w") as text_file:
-  text_file.write(services)
-
+os.system("cd panel; python populate.py; cd ../")
 
 os.system("kubectl create secret generic panel-config --from-file=./panel/index.html --from-file=./panel/services.json --namespace spinnaker")
 
@@ -190,9 +145,6 @@ time.sleep(1)
 os.system("kubectl create --namespace spinnaker -f services/panel.json")
 time.sleep(1)
 
-
-
 poll()
 
 os.system('minikube service spin-panel --namespace spinnaker')
-os.system('minikube service spin-deck --namespace spinnaker')
