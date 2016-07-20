@@ -167,7 +167,7 @@ $.getJSON( "/services.json", function( data ) {
      $('.nav').removeClass('active');
      $(this).addClass('active');
      
-if($(this).attr('html') == 'jenkins'){
+if($(this).attr('html') == 'Jenkins'){
        var win = window.open($(this).attr('href'), '_blank');
         win.focus();
     }else{

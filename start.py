@@ -19,10 +19,6 @@ def poll():
     print "\nwaiting for services to start..."
     time.sleep(2)
 
-#os.system("wget https://storage.googleapis.com/kubernetes-release/release/v1.2.4/bin/linux/amd64/kubectl")
-#os.system("chmod +x kubectl")
-#os.system("mv kubectl /usr/local/bin/kubectl")
-
 
 os.system("minikube delete")
 time.sleep(5)

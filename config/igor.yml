@@ -20,6 +20,6 @@ redis:
 
 services:
   clouddriver:
-    baseUrl: spin-clouddriver:7002
+    baseUrl: http://spin-clouddriver:7002
   echo:
-    baseUrl: spin-echo:8089
+    baseUrl: http://spin-echo:8089
