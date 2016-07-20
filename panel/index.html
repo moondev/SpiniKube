@@ -166,6 +166,11 @@ $.getJSON( "/services.json", function( data ) {
     
      $('.nav').removeClass('active');
      $(this).addClass('active');
+     
+if($(this).attr('html') == 'jenkins'){
+       var win = window.open($(this).attr('href'), '_blank');
+        win.focus();
+    }else{
 
     if($(this).attr('id') == 'logo'){
        $('#framebox').hide();
@@ -175,6 +180,10 @@ $.getJSON( "/services.json", function( data ) {
        $('#framebox').show();
        $('#frame').attr('src',$(this).attr('href'));
     }
+
+    }
+
+
 
     
     return false;

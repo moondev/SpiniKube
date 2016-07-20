@@ -20,4 +20,4 @@ spec:
           - "service jenkins start; ping localhost"
         resources: 
           limits: 
-            memory: 500Mi
+            memory: 1000Mi

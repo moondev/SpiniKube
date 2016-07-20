@@ -10,9 +10,6 @@ spec:
         app: spin-deck
     spec:
       volumes:
-      - name: nginx-config
-        secret:
-          secretName: nginx-config
       - name: deck-build
         emptyDir: {}
       containers:
@@ -20,8 +17,6 @@ spec:
         volumeMounts:
         - mountPath: /deckbuild
           name: deck-build
-        - mountPath: /nginxconfig
-          name: nginx-config
         image: quay.io/spinnaker/deck
         env:
         - name: CI
@@ -33,6 +28,11 @@ spec:
         command:
           - "/bin/sh"
           - "-c"
-          - "npm install; npm run build; mv build/webpack /deckbuild/deck; apt-get install -y nginx; service nginx stop; rm /etc/nginx/nginx.conf; cp /nginxconfig/nginx.conf /etc/nginx/nginx.conf; nginx -g daemon off;"
+          - "npm install; npm run build; mv build/webpack /deckbuild/deck; npm start"
+      - name: deck-serve
+        volumeMounts:
+        - mountPath: /opt
+          name: deck-build
+        image: chadmoon/spinnaker-nginx
         ports:
         - containerPort: 80

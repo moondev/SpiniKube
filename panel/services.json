@@ -1,0 +1,39 @@
+
+{
+"services" : [
+
+          {
+    "title": "Spinnaker Dashboard",
+    "description": "Spinnaker UI",
+    "link": "http://192.168.99.113:32728"
+    },
+
+    {
+    "title": "Kubernetes Dashboard",
+    "description": "Management UI",
+    "link": "http://192.168.99.113:30000"
+    },
+
+        {
+    "title": "Tectonic Console",
+    "description": "Alternative management UI",
+    "link": "http://192.168.99.113:31339"
+    },
+
+
+    {
+    "title": "Jenkins",
+    "description": "Automation Server",
+    "link": "http://192.168.99.113:30959"
+    },
+
+        {
+    "title": "Cluster Performace",
+    "description": "Performance analytics UI",
+    "link": "http://192.168.99.113:31502"
+    }
+
+
+
+]
+}

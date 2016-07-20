@@ -10,4 +10,4 @@ GETPOD=`kubectl get pods --selector app=$1 --no-headers=true --all-namespaces`
 POD=($GETPOD)
 PODID=${POD[1]}
 CMD=$2
-kubectl exec --namespace spinnaker -i -t $PODID env COLUMNS=$COLUMNS LINES=$LINES TERM=$TERM $CMD
+kubectl exec --namespace spinnaker -i -t $PODID env COLUMNS=$COLUMNS LINES=$LINES TERM=$TERM $2
