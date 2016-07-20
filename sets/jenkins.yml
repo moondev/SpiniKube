@@ -11,9 +11,13 @@ spec:
     spec:
       containers:
       - name: spin-jenkins
-        image: chadmoon/jenkins
+        image: chadmoon/spin-jenkins
         ports:
         - containerPort: 8080
+        command:
+          - "/bin/sh"
+          - "-c"
+          - "service jenkins start; ping localhost"
         resources: 
           limits: 
             memory: 500Mi

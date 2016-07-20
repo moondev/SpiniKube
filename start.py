@@ -81,7 +81,9 @@ os.system("kubectl create secret generic spinnaker-config --from-file=./config/e
 
 os.system("kubectl create secret generic minikube-config --from-file=./minikube/config --from-file=./minikube/ca.crt --from-file=./minikube/apiserver.crt --from-file=./minikube/apiserver.key --namespace spinnaker")
 
-os.system("kubectl create secret generic nginx-config --from-file=./config/nginx.conf --namespace spinnaker")
+os.system("kubectl create secret generic nginx-config --from-file=./nginx/nginx.conf --namespace spinnaker")
+
+os.system("rm -rf minikube")
 
 components = ('cassandra', 'redis', 'front50' 'clouddriver', 'rosco', 'orca', 'gate')
 
@@ -141,7 +143,51 @@ time.sleep(5)
 os.system("kubectl create -f sets/deck.yml --namespace spinnaker")
 os.system("kubectl expose deployment spin-deck --namespace spinnaker --type=NodePort")
 
-os.system("cd panel && python populate.py && cd ../")
+services = '''
+{
+"services" : [
+
+          {
+    "title": "Spinnaker Dashboard",
+    "description": "Spinnaker UI",
+    "link": "''' + cmdOut("minikube service spin-deck --namespace spinnaker --url") + '''"
+    },
+
+    {
+    "title": "Kubernetes Dashboard",
+    "description": "Management UI",
+    "link": "''' + cmdOut("minikube service kubernetes-dashboard --namespace kube-system --url") + '''"
+    },
+
+        {
+    "title": "Tectonic Console",
+    "description": "Alternative management UI",
+    "link": "''' + cmdOut("minikube service tectonic --url") + '''"
+    },
+
+
+    {
+    "title": "Jenkins",
+    "description": "Automation Server",
+    "link": "''' + cmdOut("minikube service spin-jenkins --namespace spinnaker --url") + '''"
+    },
+
+        {
+    "title": "Cluster Performace",
+    "description": "Performance analytics UI",
+    "link": "''' + cmdOut("minikube service kubedash --namespace kube-system --url") + '''"
+    }
+
+
+
+]
+}
+'''
+
+os.system("rm -f panel/services.json")
+
+with open("panel/services.json", "w") as text_file:
+  text_file.write(services)
 
 os.system("kubectl create secret generic panel-config --from-file=./panel/index.html --from-file=./panel/services.json --namespace spinnaker")
 
@@ -155,12 +201,3 @@ poll()
 
 os.system('minikube service spin-panel --namespace spinnaker')
 
-##setup jenkins
-
-#os.system('./term spin-jenkins "cd ~ && wget http://localhost:8080/jnlpJars/jenkins-cli.jar"')
-#os.system('./term spin-jenkins "java -jar jenkins-cli.jar -s http://localhost:8080/ login --username admin --password-file /var/jenkins_home/secrets/initialAdminPassword && echo \'hpsr=new hudson.security.HudsonPrivateSecurityRealm(false); hpsr.createAccount(\"jenkins\", \"jenkins\")\' | java -jar #jenkins-cli.jar -s http://localhost:8080 groovy ="')
-# java -jar jenkins-cli.jar -s http://localhost:8080/ login --username admin --password-file /var/jenkins_home/secrets/initialAdminPassword
-#echo 'hpsr=new hudson.security.HudsonPrivateSecurityRealm(false); hpsr.createAccount("jenkins", "jenkins")' | java -jar jenkins-cli.jar -s http://localhost:8080 groovy =
-#java -jar jenkins-cli.jar -s http://localhost:8080/ install-plugin git
-#java -jar jenkins-cli.jar -s http://localhost:8080/ restart
-#java -jar jenkins-cli.jar -s http://localhost:8080/ login --username jenkins --password jenkins

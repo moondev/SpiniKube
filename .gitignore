@@ -1,1 +1,2 @@
-minikube
+minikube/*
+panel/services.json
