@@ -26,7 +26,7 @@ def poll():
 
 os.system("minikube delete")
 time.sleep(5)
-os.system("minikube start --memory 6000 --cpus 2")
+os.system("minikube start --memory 3000 --cpus 2")
 time.sleep(10)
 poll()
 
@@ -125,6 +125,11 @@ time.sleep(1)
 os.system("kubectl create --namespace spinnaker -f services/jenkins.json")
 time.sleep(1)
 
+os.system("kubectl create --namespace spinnaker -f sets/igor.yml")
+time.sleep(1)
+os.system("kubectl create --namespace spinnaker -f services/igor.json")
+time.sleep(1)
+
 os.system("kubectl create -f kubedash/bundle.yaml")
 
 os.system("kubectl create -f tectonic/pull.yml")
@@ -147,4 +152,15 @@ time.sleep(1)
 
 poll()
 
+
 os.system('minikube service spin-panel --namespace spinnaker')
+
+##setup jenkins
+
+#os.system('./term spin-jenkins "cd ~ && wget http://localhost:8080/jnlpJars/jenkins-cli.jar"')
+#os.system('./term spin-jenkins "java -jar jenkins-cli.jar -s http://localhost:8080/ login --username admin --password-file /var/jenkins_home/secrets/initialAdminPassword && echo \'hpsr=new hudson.security.HudsonPrivateSecurityRealm(false); hpsr.createAccount(\"jenkins\", \"jenkins\")\' | java -jar #jenkins-cli.jar -s http://localhost:8080 groovy ="')
+# java -jar jenkins-cli.jar -s http://localhost:8080/ login --username admin --password-file /var/jenkins_home/secrets/initialAdminPassword
+#echo 'hpsr=new hudson.security.HudsonPrivateSecurityRealm(false); hpsr.createAccount("jenkins", "jenkins")' | java -jar jenkins-cli.jar -s http://localhost:8080 groovy =
+#java -jar jenkins-cli.jar -s http://localhost:8080/ install-plugin git
+#java -jar jenkins-cli.jar -s http://localhost:8080/ restart
+#java -jar jenkins-cli.jar -s http://localhost:8080/ login --username jenkins --password jenkins

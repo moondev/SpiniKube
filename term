@@ -6,4 +6,8 @@ fi
 COLUMNS=`tput cols`
 LINES=`tput lines`
 TERM=xterm
-kubectl exec --namespace spinnaker -i -t $1 env COLUMNS=$COLUMNS LINES=$LINES TERM=$TERM bash
+GETPOD=`kubectl get pods --selector app=$1 --no-headers=true --all-namespaces`
+POD=($GETPOD)
+PODID=${POD[1]}
+CMD=$2
+kubectl exec --namespace spinnaker -i -t $PODID env COLUMNS=$COLUMNS LINES=$LINES TERM=$TERM $CMD
