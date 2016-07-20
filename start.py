@@ -141,7 +141,7 @@ time.sleep(5)
 os.system("kubectl create -f sets/deck.yml --namespace spinnaker")
 os.system("kubectl expose deployment spin-deck --namespace spinnaker --type=NodePort")
 
-os.system("cd panel; python populate.py; cd ../")
+os.system("cd panel && python populate.py && cd ../")
 
 os.system("kubectl create secret generic panel-config --from-file=./panel/index.html --from-file=./panel/services.json --namespace spinnaker")
 

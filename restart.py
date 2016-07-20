@@ -18,28 +18,8 @@ def poll():
 
 
 
-os.system("kubectl delete secret spinnaker-config --namespace=spinnaker")
-os.system("kubectl delete secret minikube-config --namespace=spinnaker")
-os.system("kubectl delete secret nginx-config --namespace=spinnaker")
+os.system("kubectl delete namespace spinnaker")
 
-os.system("kubectl create secret generic spinnaker-config --from-file=./config/gate.yml --from-file=./config/orca.yml --from-file=./config/rosco.yml --from-file=./config/front50.yml --from-file=./config/clouddriver.yml --namespace spinnaker")
-
-
-os.system("kubectl create secret generic minikube-config --from-file=./minikube/config --from-file=./minikube/ca.crt --from-file=./minikube/apiserver.crt --from-file=./minikube/apiserver.key --namespace spinnaker")
-
-os.system("kubectl create secret generic nginx-config --from-file=./config/nginx.conf --namespace spinnaker")
-
-os.system("kubectl delete deployment spin-front50 --namespace=spinnaker")
-os.system("kubectl delete deployment spin-clouddriver --namespace=spinnaker")
-os.system("kubectl delete deployment spin-rosco --namespace=spinnaker")
-os.system("kubectl delete deployment spin-orca --namespace=spinnaker")
-os.system("kubectl delete deployment spin-gate --namespace=spinnaker")
-
-os.system("kubectl delete service spin-front50 --namespace=spinnaker")
-os.system("kubectl delete service spin-clouddriver --namespace=spinnaker")
-os.system("kubectl delete service spin-rosco --namespace=spinnaker")
-os.system("kubectl delete service spin-orca --namespace=spinnaker")
-os.system("kubectl delete service spin-gate --namespace=spinnaker")
 
 
 
