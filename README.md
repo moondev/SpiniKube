@@ -28,7 +28,7 @@ sudo installer -pkg /Volumes/VirtualBox/VirtualBox.pkg -target /
 sudo apt-get install virtualbox 
 ```
 
-### 3. Install [minikube](https://github.com/kubernetes/minikube)
+#### 3. Install [minikube](https://github.com/kubernetes/minikube)
 
 ```
 ### OSX
