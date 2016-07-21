@@ -34,7 +34,7 @@
   </style>
 
 </head>
-<body style="overflow:hidden;">
+<body class="ui" style="overflow:hidden;">
 
 
 
@@ -52,88 +52,50 @@
   </div>
 -->
 
-<div id="top" class="ui fixed menu">
+
+<!--
+<div id="top" class="ui grey fixed menu">
   <a id="logo" class="nav item active">
     <b>SpiniKube</b>
   </a>
   
 
 </div>
+-->
+<div id="top" class="ui fixed grey inverted menu">
+  <a id="logo" href="#" class="nav header item">
+        SpiniKube
+      </a>
+</div>
 
 
 
 
-
-
-   <div id="home" style="width:1127px;margin-left:auto;margin-right:auto;" class="ui text">
+   <div id="home" style="padding-left:10px;padding-right:10px;" class="ui text">
      <br /><br />
-<h2>Welcome to SpiniKube!</h2>
-<p>The following is a description of each component that can be found in the top menu.</p>
-<div id="services" class="ui cards">
-
-   <div class="card">
-    <div class="content">
-      <div class="header">Spinnaker Dashboard</div>
-      <div class="description">
-        Management UI
-      </div>
-    </div>
-  </div>
-
-
-  <div class="card">
-    <div class="content">
-      <div class="header">Kubernetes Dashboard</div>
-      <div class="description">
-        Management UI
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="content">
-      <div class="header">Kubedash</div>
-      <div class="description">
-        Performance analytics UI.
-      </div>
-    </div>
-  </div>
-
+<h2 class="ui center aligned header">
   
+  Welcome to SpiniKube
+</h2>
 
-    <div class="card">
-    <div class="content">
-      <div class="header">Jenkins</div>
-      <div class="description">
-        Automation Server
-      </div>
-    </div>
-  </div>
+<h4 class="ui horizontal divider header">
+  Installed Components
+</h4>
 
- <div class="card">
-    <div class="content">
-      <div class="header">Portus</div>
-      <div class="description">
-        Private Docker Registry UI
-      </div>
-    </div>
-  </div>
+
+<div id="cards" class="ui five column grid">
 
 
 
-  <div class="card">
-    <div class="content">
-      <div class="header">Tectonic Console</div>
-      <div class="description">
-        Alternative management UI
-      </div>
-    </div>
-  </div>
+
+
 
 
 
 
 </div>
+
+
 
   </div>
 
@@ -160,6 +122,7 @@ $.getJSON( "/services.json", function( data ) {
 
   $.each( data.services, function( key, val ) {
     $("#top").append('<a href="' + val.link + '" class="nav item">' + val.title + '</a>');
+    $("#cards").append('<div class="column"><div class="ui fluid raised link card"><div class="content"><div class="header">' + val.title + '</div><div class="meta"><span class="category">descrip</span></div><div class="description"><p>descrip</p></div></div></div></div>');
   });
 
   $('.nav').click(function(){
