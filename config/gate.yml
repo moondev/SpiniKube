@@ -11,3 +11,6 @@ services:
     baseUrl: http://spin-front50:8080
   orca:
     baseUrl: http://spin-orca:8083
+  igor:
+    enabled: true
+    baseUrl: http://spin-igor:8088

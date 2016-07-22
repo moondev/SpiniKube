@@ -2,7 +2,7 @@ aws:
   enabled: false
 docker:
   bakeryDefaults:
-    targetRepository: null
+    targetRepository: dockerhub
   enabled: true
 google:
   enabled: false
