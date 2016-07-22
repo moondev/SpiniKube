@@ -1,6 +1,15 @@
 # SpiniKube = Spinnaker + MiniKube
-SpiniKube is a set of scripts and configurations that makes it easy to launch a local kubernetes cluster with Spinnaker and other tools installed.
+SpiniKube is a set of scripts and configurations that makes it easy to launch Spinnaker on a local kubernetes cluster.
 
+The following items are setup on the cluster:
+* Spinnaker, configured to deploy applications to the local cluster
+* Kubernetes Dashboard: Official management UI
+* KubeDash: Cluster performance and metrics UI
+* Tectonic Console: Alternative Kubernetes managment UI from CoreOS
+* Jenkins: Automation server configured to work with Spinnaker Jenkins stages
+* Registry: Container image registry for storing images
+* Portus: UI for managing the registry
+* SpiniKube Start page: Handy UI with links to the above services
 ## Initial Setup Instructions
 
 ### Ensure dependencies are installed
