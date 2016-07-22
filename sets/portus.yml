@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: spin-portus
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: spin-portus
+    spec:
+      containers:
+      - name: spin-portus
+        image: bydga/portus
+        ports:
+        - containerPort: 3000

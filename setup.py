@@ -123,6 +123,11 @@ time.sleep(1)
 os.system("kubectl create --namespace spinnaker -f services/jenkins.json")
 time.sleep(1)
 
+os.system("kubectl create --namespace spinnaker -f sets/portus.yml")
+time.sleep(1)
+os.system("kubectl create --namespace spinnaker -f services/portus.json")
+time.sleep(1)
+
 os.system("kubectl create --namespace spinnaker -f sets/igor.yml")
 time.sleep(1)
 os.system("kubectl create --namespace spinnaker -f services/igor.json")
@@ -138,6 +143,7 @@ time.sleep(5)
 
 os.system("kubectl create -f sets/deck.yml --namespace spinnaker")
 os.system("kubectl expose deployment spin-deck --namespace spinnaker --type=NodePort")
+os.system("kubectl expose deployment spin-portus --namespace spinnaker --type=NodePort")
 
 services = '''
 {
@@ -180,20 +186,20 @@ services = '''
 }
 '''
 
-os.system("rm -f panel/services.json")
+os.system("rm -f start/services.json")
 
-with open("panel/services.json", "w") as text_file:
+with open("start/services.json", "w") as text_file:
   text_file.write(services)
 
-os.system("kubectl create secret generic panel-config --from-file=./panel/index.html --from-file=./panel/services.json --namespace spinnaker")
+os.system("kubectl create secret generic start-config --from-file=./start/index.html --from-file=./start/services.json --namespace spinnaker")
 
-os.system("kubectl create --namespace spinnaker -f sets/panel.yml")
+os.system("kubectl create --namespace spinnaker -f sets/start.yml")
 time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f services/panel.json")
+os.system("kubectl create --namespace spinnaker -f services/start.json")
 time.sleep(1)
 
 poll()
 
 
-os.system('minikube service spin-panel --namespace spinnaker')
+os.system('minikube service spin-start --namespace spinnaker')
 
