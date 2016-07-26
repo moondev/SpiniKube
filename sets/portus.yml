@@ -11,6 +11,10 @@ spec:
     spec:
       containers:
       - name: spin-portus
-        image: bydga/portus
+        image: chadmoon/portus
+        command:
+          - "/bin/sh"
+          - "-c"
+          - "cd /portus; service mysql start; rails s -b 0.0.0.0 -p 3000"
         ports:
         - containerPort: 3000

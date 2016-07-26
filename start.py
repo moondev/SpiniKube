@@ -20,20 +20,20 @@ def poll():
     time.sleep(2)
 
 
-os.system("minikube delete")
-time.sleep(5)
-os.system("minikube start --memory 5000 --cpus 2")
-time.sleep(10)
-poll()
+# os.system("minikube delete")
+# time.sleep(5)
+# os.system("minikube start --memory 5000 --cpus 2")
+# time.sleep(10)
+# poll()
 
 
 
 
-os.system("kubectl create namespace spinnaker")
+# os.system("kubectl create namespace spinnaker")
 
-os.system("rm minikube/apiserver.crt")
-os.system("rm minikube/apiserver.key")
-os.system("rm minikube/ca.crt")
+# os.system("rm minikube/apiserver.crt")
+# os.system("rm minikube/apiserver.key")
+# os.system("rm minikube/ca.crt")
 
 
 
@@ -73,11 +73,15 @@ with open("minikube/config", "w") as text_file:
 
 time.sleep(1)
 
-os.system("kubectl create secret generic spinnaker-config --from-file=./config/echo.yml --from-file=./config/igor.yml --from-file=./config/gate.yml --from-file=./config/orca.yml --from-file=./config/rosco.yml --from-file=./config/front50.yml --from-file=./config/clouddriver.yml --namespace spinnaker")
+#os.system("kubectl create secret generic spinnaker-config --from-file=./config/echo.yml --from-file=./config/igor.yml --from-file=./config/gate.yml --from-file=./config/orca.yml --from-file=./config/rosco.yml --from-file=./config/front50.yml --from-file=./config/clouddriver.yml --namespace spinnaker")
+
+os.system("kubectl delete secret minikube-config --namespace spinnaker")
 
 os.system("kubectl create secret generic minikube-config --from-file=./minikube/config --from-file=./minikube/ca.crt --from-file=./minikube/apiserver.crt --from-file=./minikube/apiserver.key --namespace spinnaker")
 
-os.system("kubectl create secret generic nginx-config --from-file=./nginx/nginx.conf --namespace spinnaker")
+#os.system("kubectl delete secret nginx-config --namespace spinnaker")
+
+o#s.system("kubectl create secret generic nginx-config --from-file=./nginx/nginx.conf --namespace spinnaker")
 
 os.system("rm -rf minikube")
 

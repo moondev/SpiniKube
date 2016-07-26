@@ -2,19 +2,19 @@
     "kind": "Service",
     "apiVersion": "v1",
     "metadata": {
-        "name": "spin-port"
+        "name": "spin-reg"
     },
     "spec": {
         "selector": {
-            "app": "spin-port"
+            "app": "spin-reg"
         },
         "type": "NodePort",
         "ports": [
             {
-                "name": "port",
+                "name": "jenkins",
                 "protocol": "TCP",
-                "port": 3000,
-                "targetPort": 3000
+                "port": 5000,
+                "targetPort": 5000
             }
         ]
     }
