@@ -133,6 +133,11 @@ time.sleep(1)
 os.system("kubectl create --namespace spinnaker -f services/igor.json")
 time.sleep(1)
 
+os.system("kubectl create --namespace spinnaker -f sets/registry.yml")
+time.sleep(1)
+os.system("kubectl create --namespace spinnaker -f services/registry.json")
+time.sleep(1)
+
 os.system("kubectl create -f kubedash/bundle.yaml")
 
 os.system("kubectl create -f tectonic/pull.yml")

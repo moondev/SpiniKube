@@ -19,4 +19,4 @@ spec:
         command:
           - "bash"
           - "-c"
-          - "nohup dockerd-entrypoint.sh & sleep 5; java -jar /usr/local/jenkins/jenkins.war"
+          - "nohup dockerd-entrypoint.sh --insecure-registry spin-registry:5000 & sleep 5; java -jar /usr/local/jenkins/jenkins.war"
