@@ -81,7 +81,7 @@ os.system("kubectl create secret generic minikube-config --from-file=./minikube/
 
 #os.system("kubectl delete secret nginx-config --namespace spinnaker")
 
-o#s.system("kubectl create secret generic nginx-config --from-file=./nginx/nginx.conf --namespace spinnaker")
+#os.system("kubectl create secret generic nginx-config --from-file=./nginx/nginx.conf --namespace spinnaker")
 
 os.system("rm -rf minikube")
 
