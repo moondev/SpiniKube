@@ -11,13 +11,12 @@ spec:
     spec:
       containers:
       - name: spin-jenkins
-        image: chadmoon/spin-jenkins
+        securityContext:
+          privileged: true
+        image: chadmoon/jenkins-dind
         ports:
         - containerPort: 8080
         command:
-          - "/bin/sh"
+          - "bash"
           - "-c"
-          - "service jenkins start; ping localhost"
-        resources: 
-          limits: 
-            memory: 1000Mi
+          - "nohup dockerd-entrypoint.sh & sleep 5; java -jar /usr/local/jenkins/jenkins.war"
