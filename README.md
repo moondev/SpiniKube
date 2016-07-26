@@ -3,10 +3,25 @@ SpiniKube is a set of scripts and configurations that makes it easy to launch Sp
 
 The following items are setup on the cluster:
 * Spinnaker, configured to deploy applications to the local cluster
+
+<img src="screenshots/spinnaker.png" width="300">
+
 * Kubernetes Dashboard: Official management UI
+
+<img src="screenshots/dashboard.png" width="300">
+
 * KubeDash: Cluster performance and metrics UI
+
+<img src="screenshots/kubedash.png" width="300">
+
 * Tectonic Console: Alternative Kubernetes managment UI from CoreOS
+
+<img src="screenshots/tectonic.png" width="300">
+
 * Jenkins: Automation server configured to work with Spinnaker Jenkins stages
+
+<img src="screenshots/jenkins.png" width="300">
+
 * Registry: Container image registry for storing images
 * Portus: UI for managing the registry
 * SpiniKube Start page: Handy UI with links to the above services
