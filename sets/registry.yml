@@ -11,6 +11,6 @@ spec:
     spec:
       containers:
       - name: spin-reg
-        image: registry:2
+        image: registry:2 
         ports:
         - containerPort: 5000

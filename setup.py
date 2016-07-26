@@ -178,6 +178,11 @@ services = '''
     "title": "Cluster Performace",
     "description": "Performance analytics UI",
     "link": "''' + cmdOut("minikube service kubedash --namespace kube-system --url") + '''"
+    },
+      {
+    "title": "Portus Registry",
+    "description": "Local image repository",
+    "link": "''' + cmdOut("minikube service spin-portus --namespace spinnaker --url") + '''"
     }
 
 
