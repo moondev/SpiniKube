@@ -65,7 +65,7 @@ curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.6.0/miniku
 ## Install and start SpiniKube
 ```
 git clone https://github.com/moondev/SpiniKube.git && cd SpiniKube
-python start.py
+python setup.py
 ```
 
 This process takes about 10 to 20 minutes depending on your internet connection.
