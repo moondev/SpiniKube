@@ -138,6 +138,11 @@ time.sleep(1)
 os.system("kubectl create --namespace spinnaker -f services/registry.json")
 time.sleep(1)
 
+os.system("kubectl create --namespace spinnaker -f sets/registryui.yml")
+time.sleep(1)
+os.system("kubectl create --namespace spinnaker -f services/registryui.json")
+time.sleep(1)
+
 os.system("kubectl create -f kubedash/bundle.yaml")
 
 os.system("kubectl create -f tectonic/pull.yml")
@@ -148,7 +153,7 @@ time.sleep(5)
 
 os.system("kubectl create -f sets/deck.yml --namespace spinnaker")
 os.system("kubectl expose deployment spin-deck --namespace spinnaker --type=NodePort")
-os.system("kubectl expose deployment spin-portus --namespace spinnaker --type=NodePort")
+# os.system("kubectl expose deployment spin-portus --namespace spinnaker --type=NodePort")
 
 time.sleep(30)
 
@@ -187,9 +192,9 @@ services = '''
     "link": "''' + cmdOut("minikube service kubedash --namespace kube-system --url") + '''"
     },
       {
-    "title": "Portus Registry",
+    "title": "Container Image Registry",
     "description": "Local image repository",
-    "link": "''' + cmdOut("minikube service spin-portus --namespace spinnaker --url") + '''"
+    "link": "''' + cmdOut("minikube service spin-registryui --namespace spinnaker --url") + '''"
     }
 
 
