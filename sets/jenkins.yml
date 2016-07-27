@@ -22,4 +22,4 @@ spec:
           - "nohup dockerd-entrypoint.sh --insecure-registry spin-registry:5000 & sleep 5; java -jar /usr/local/jenkins/jenkins.war"
         resources: 
           limits: 
-            cpu: 1000m
+            cpu: 500mC
