@@ -122,11 +122,6 @@ time.sleep(1)
 os.system("kubectl create --namespace spinnaker -f services/jenkins.json")
 time.sleep(1)
 
-os.system("kubectl create --namespace spinnaker -f sets/portus.yml")
-time.sleep(1)
-#os.system("kubectl create --namespace spinnaker -f services/portus.json")
-time.sleep(1)
-
 os.system("kubectl create --namespace spinnaker -f sets/igor.yml")
 time.sleep(1)
 os.system("kubectl create --namespace spinnaker -f services/igor.json")
@@ -142,6 +137,8 @@ time.sleep(1)
 os.system("kubectl create --namespace spinnaker -f services/registryui.json")
 time.sleep(1)
 
+os.system("kubectl create --namespace spinnaker -f sets/registry-proxy.yml")
+
 os.system("kubectl create -f kubedash/bundle.yaml")
 
 os.system("kubectl create -f tectonic/pull.yml")
@@ -152,7 +149,6 @@ time.sleep(5)
 
 os.system("kubectl create -f sets/deck.yml --namespace spinnaker")
 os.system("kubectl expose deployment spin-deck --namespace spinnaker --type=NodePort")
-# os.system("kubectl expose deployment spin-portus --namespace spinnaker --type=NodePort")
 
 time.sleep(60)
 
@@ -195,8 +191,6 @@ services = '''
     "description": "Local image repository",
     "link": "''' + cmdOut("minikube service spin-registryui --namespace spinnaker --url") + '''"
     }
-
-
 
 ]
 }
