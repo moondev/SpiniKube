@@ -11,12 +11,11 @@ spec:
     spec:
       containers:
       - name: spin-registryui
-        image: hyper/docker-registry-web:latest
+        image: hyper/docker-registry-web
         ports:
         - containerPort: 8080
         env:
         - name: REGISTRY_URL
           value: http://spin-registry:5000/v2
-        env:
         - name: REGISTRY_NAME
           value: spin-registry

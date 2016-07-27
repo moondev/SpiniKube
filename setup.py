@@ -155,7 +155,7 @@ os.system("kubectl create -f sets/deck.yml --namespace spinnaker")
 os.system("kubectl expose deployment spin-deck --namespace spinnaker --type=NodePort")
 # os.system("kubectl expose deployment spin-portus --namespace spinnaker --type=NodePort")
 
-time.sleep(30)
+time.sleep(60)
 
 services = '''
 {
