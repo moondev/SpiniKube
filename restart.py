@@ -5,20 +5,22 @@ import collections
 import subprocess
 
 def cmdOut(cmd):
-  return subprocess.check_output(cmd, shell=True)
-
-def poll():
-  creating = "ContainerCreating"
-  while creating.find("ContainerCreating") != -1:
+  return subprocess.check_output(cmd, shell=True).strip()
+#
+#ContainerCreating
+#Terminating
+def poll(search):
+  creating = search
+  while creating.find(search) != -1:
     creating = cmdOut("kubectl get pods --all-namespaces")
     os.system("clear")
     print creating
-    print "\nwaiting for services to start..."
+    print "\nworking..."
     time.sleep(2)
 
 os.system("kubectl delete namespace spinnaker")
-
-time.sleep(60)
+time.sleep(2)
+poll("Terminating")
 
 os.system("kubectl create namespace spinnaker")
 
@@ -66,77 +68,76 @@ os.system("kubectl create secret generic nginx-config --from-file=./nginx/nginx.
 os.system("rm -rf minikube")
 
 
-components = ('cassandra', 'redis', 'front50' 'clouddriver', 'rosco', 'orca', 'gate')
+components = ('cassandra', 'redis', 'front50', 'clouddriver', 'rosco', 'orca', 'gate', 'jenkins', 'igor', 'registry', 'registryui', 'deck')
 
-os.system("kubectl create --namespace spinnaker -f sets/cassandra.yml")
-time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f services/cassandra.json")
-time.sleep(1)
-
-os.system("kubectl create --namespace spinnaker -f sets/redis.yml")
-time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f services/redis.json")
-time.sleep(1)
-
-os.system("kubectl create --namespace spinnaker -f sets/front50.yml")
-time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f services/front50.json")
-time.sleep(1)
-
-os.system("kubectl create --namespace spinnaker -f sets/clouddriver.yml")
-time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f services/clouddriver.json")
-time.sleep(1)
-
-os.system("kubectl create --namespace spinnaker -f sets/rosco.yml")
-time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f services/rosco.json")
-time.sleep(1)
-
-os.system("kubectl create --namespace spinnaker -f sets/orca.yml")
-time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f services/orca.json")
-time.sleep(1)
-
-os.system("kubectl create --namespace spinnaker -f sets/gate.yml")
-time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f services/gate.json")
-time.sleep(1)
-
-os.system("kubectl create --namespace spinnaker -f sets/jenkins.yml")
-time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f services/jenkins.json")
-time.sleep(1)
-
-os.system("kubectl create --namespace spinnaker -f sets/igor.yml")
-time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f services/igor.json")
-time.sleep(1)
-
-os.system("kubectl create --namespace spinnaker -f sets/registry.yml")
-time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f services/registry.json")
-time.sleep(1)
-
-os.system("kubectl create --namespace spinnaker -f sets/registryui.yml")
-time.sleep(1)
-os.system("kubectl create --namespace spinnaker -f services/registryui.json")
-time.sleep(1)
-
-time.sleep(5)
-
-os.system("kubectl create -f sets/deck.yml --namespace spinnaker")
-os.system("kubectl expose deployment spin-deck --namespace spinnaker --type=NodePort")
+for component in components:
+  os.system("kubectl create --namespace spinnaker -f sets/" + component + ".yml")
+  time.sleep(1)
+  os.system("kubectl create --namespace spinnaker -f services/" + component + ".json")
+  time.sleep(1)
 
 os.system("kubectl create --namespace spinnaker -f sets/registry-proxy.yml")
 
 
+poll("ContainerCreating")
+
+services = '''
+{
+"services" : [
+
+          {
+    "title": "Spinnaker Dashboard",
+    "description": "Spinnaker UI",
+    "link": "''' + cmdOut("minikube service spin-deck --namespace spinnaker --url") + '''"
+    },
+
+    {
+    "title": "Kubernetes Dashboard",
+    "description": "Management UI",
+    "link": "''' + cmdOut("minikube service kubernetes-dashboard --namespace kube-system --url") + '''"
+    },
+
+        {
+    "title": "Tectonic Console",
+    "description": "Alternative management UI",
+    "link": "''' + cmdOut("minikube service tectonic --url") + '''"
+    },
 
 
+    {
+    "title": "Jenkins",
+    "description": "Automation Server",
+    "link": "''' + cmdOut("minikube service spin-jenkins --namespace spinnaker --url") + '''"
+    },
 
-poll()
+        {
+    "title": "Cluster Performace",
+    "description": "Performance analytics UI",
+    "link": "''' + cmdOut("minikube service kubedash --namespace kube-system --url") + '''"
+    },
+      {
+    "title": "Container Image Registry",
+    "description": "Local image repository",
+    "link": "''' + cmdOut("minikube service spin-registryui --namespace spinnaker --url") + '''"
+    }
 
-#os.system("minikube dashboard")
+]
+}
+'''
+
+os.system("rm -f start/services.json")
+
+with open("start/services.json", "w") as text_file:
+  text_file.write(services)
+
+os.system("kubectl create secret generic start-config --from-file=./start/index.html --from-file=./start/services.json --namespace spinnaker")
+
+os.system("kubectl create --namespace spinnaker -f sets/start.yml")
+time.sleep(1)
+os.system("kubectl create --namespace spinnaker -f services/start.json")
+time.sleep(1)
 
 
-#mount -t vboxsf hosthome /hosthome
+poll("ContainerCreating")
+
+os.system('minikube service spin-start --namespace spinnaker')
