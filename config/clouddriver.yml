@@ -22,6 +22,7 @@ kubernetes:
     - name: my-kubernetes-account
       dockerRegistries:
         - accountName: dockerhub
+        - accountName: spinnaker-registry
 
 dockerRegistry:
   accounts:
@@ -29,6 +30,8 @@ dockerRegistry:
     name: dockerhub
     repositories:
     - library/nginx
+  - address: http://spin-registry:5000/v2
+    name: spinnaker-registry
   enabled: true
 
 redis:
