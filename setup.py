@@ -1,7 +1,6 @@
 
 # #!/usr/local/bin/python
 
-import yaml
 import os
 import time
 import collections
