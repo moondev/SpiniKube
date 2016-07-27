@@ -16,6 +16,7 @@ spec:
         image: chadmoon/jenkins-dind
         ports:
         - containerPort: 8080
+        - containerPort: 50000
         command:
           - "bash"
           - "-c"

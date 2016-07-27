@@ -18,15 +18,10 @@ spec:
             value: "true"
         ports:
         - containerPort: 9160
-          hostPort: 9160
         - containerPort: 9042
-          hostPort: 9042
         - containerPort: 7199
-          hostPort: 7199
         - containerPort: 7000
-          hostPort: 7000
         - containerPort: 7001
-          hostPort: 7001
         readinessProbe:
           tcpSocket:
             port: 9160
