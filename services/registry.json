@@ -11,10 +11,16 @@
         "type": "NodePort",
         "ports": [
             {
-                "name": "jenkins",
+                "name": "registry",
                 "protocol": "TCP",
                 "port": 5000,
                 "targetPort": 5000
+            },
+            {
+                "name": "ui",
+                "protocol": "TCP",
+                "port": 8080,
+                "targetPort": 8080
             }
         ]
     }

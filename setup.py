@@ -22,7 +22,7 @@ def poll():
 
 os.system("minikube delete")
 time.sleep(5)
-os.system("minikube start --memory 5000 --cpus 2")
+os.system("minikube start --memory 8000 --cpus 2")
 time.sleep(10)
 poll()
 
@@ -149,6 +149,8 @@ time.sleep(5)
 os.system("kubectl create -f sets/deck.yml --namespace spinnaker")
 os.system("kubectl expose deployment spin-deck --namespace spinnaker --type=NodePort")
 os.system("kubectl expose deployment spin-portus --namespace spinnaker --type=NodePort")
+
+time.sleep(30)
 
 services = '''
 {
