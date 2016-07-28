@@ -26,6 +26,3 @@ spec:
         image: quay.io/spinnaker/clouddriver
         ports:
         - containerPort: 7002
-        resources: 
-          limits: 
-            memory: 700Mi

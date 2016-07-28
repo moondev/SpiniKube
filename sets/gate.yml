@@ -21,6 +21,3 @@ spec:
         image: quay.io/spinnaker/gate
         ports:
         - containerPort: 8084
-        resources: 
-          limits: 
-            memory: 300Mi
