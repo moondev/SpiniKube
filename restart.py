@@ -81,16 +81,23 @@ for component in components:
   time.sleep(1)
 
 for component in components:
+  os.system("kubectl delete -f services2/" + component + ".json")
+  time.sleep(1)
+
+for component in components:
   os.system("kubectl create -f services2/" + component + ".json")
   time.sleep(1)
+
+os.system("kubectl create -f sets2/cassandra.yml")
+os.system("kubectl create -f sets2/redis.yml")
 
 os.system("kubectl create --namespace spinnaker -f sets/registry-proxy.yml")
 
 os.system("kubectl create -f kubedash/bundle.yaml")
 
-os.system("kubectl create -f tectonic/pull.yml --namespace kube-system")
-os.system("kubectl create -f tectonic/tectonic-console.yaml --namespace kube-system")
-os.system("kubectl create -f tectonic/tectonic.json --namespace kube-system")
+os.system("kubectl create -f tectonic/pull.yml")
+os.system("kubectl create -f tectonic/tectonic-console.yaml")
+os.system("kubectl create -f tectonic/tectonic.json")
 
 poll("ContainerCreating")
 

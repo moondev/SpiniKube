@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: spin-deck
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: spin-deck
+    spec:
+      volumes:
+      - name: deck-build
+        emptyDir: {}
+      - name: git-volume
+        gitRepo:
+          repository: "https://github.com/moondev/deckpack.git"
+      containers:
+      # - name: deck-build
+      #   volumeMounts:
+      #   - mountPath: /deckbuild
+      #     name: deck-build
+      #   image: quay.io/spinnaker/deck
+      #   env:
+      #   - name: CI
+      #     value: "true"
+      #   - name: API_HOST
+      #     value: /gate
+      #   - name: BAKERY_DETAIL_URL
+      #     value: /bakery
+      #   command:
+      #     - "/bin/sh"
+      #     - "-c"
+      #     - "npm install; npm run build; mv build/webpack /deckbuild/deck; npm start"
+      - name: deck-serve
+        volumeMounts:
+        - mountPath: /deckbuild/deck
+          name: git-volume
+        image: chadmoon/spinnaker-nginx
+        command:
+          - "/bin/sh"
+          - "-c"
+          - "cp -r /deckbuild/deck/deckpack /opt/deck && nginx -g 'daemon off;'"
+        ports:
+        - containerPort: 80

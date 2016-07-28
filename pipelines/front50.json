@@ -102,7 +102,7 @@
           "provider": "kubernetes",
           "region": "default",
           "loadBalancers": [
-            "spin-front50"
+            "spinnaker-front50"
           ]
         }
       ]

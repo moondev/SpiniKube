@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: spin-igor
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: spin-igor
+    spec:
+      volumes:
+      - name: spinnaker-config
+        secret:
+          secretName: spinnaker-config
+      containers:
+      - name: spin-igor
+        volumeMounts:
+        - mountPath: /opt/igor/config
+          name: spinnaker-config
+        image: quay.io/spinnaker/igor
+        ports:
+        - containerPort: 8084

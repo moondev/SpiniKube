@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: spin-registry
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: spin-registry
+    spec:
+      containers:
+      - name: spin-registry
+        image: registry:2.4.1
+        ports:
+        - containerPort: 5000
