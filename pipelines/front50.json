@@ -1,0 +1,130 @@
+{
+  "keepWaitingPipelines": false,
+  "limitConcurrent": true,
+  "appConfig": {},
+  "parallel": true,
+  "stages": [
+    {
+      "refId": "1",
+      "requisiteStageRefIds": [],
+      "type": "jenkins",
+      "name": "Build Image",
+      "failPipeline": true,
+      "continuePipeline": false,
+      "master": "jenkins",
+      "job": "spinnaker-front50",
+      "parameters": {}
+    },
+    {
+      "refId": "2",
+      "requisiteStageRefIds": [
+        "1"
+      ],
+      "type": "deploy",
+      "name": "Deploy",
+      "clusters": [
+        {
+          "account": "my-kubernetes-account",
+          "application": "spinnaker",
+          "strategy": "redblack",
+          "targetSize": 1,
+          "cloudProvider": "kubernetes",
+          "namespace": "default",
+          "containers": [
+            {
+              "name": "front50",
+              "imageDescription": {
+                "repository": "front50",
+                "tag": "latest",
+                "imageId": "spin-registry:5000/front50:latest",
+                "registry": "spin-registry:5000",
+                "account": "spinnaker-registry"
+              },
+              "requests": {
+                "memory": null,
+                "cpu": null
+              },
+              "limits": {
+                "memory": null,
+                "cpu": null
+              },
+              "ports": [
+                {
+                  "name": "http",
+                  "containerPort": 8087,
+                  "protocol": "TCP",
+                  "hostPort": null,
+                  "hostIp": null
+                }
+              ],
+              "livenessProbe": null,
+              "readinessProbe": {
+                "initialDelaySeconds": 20,
+                "timeoutSeconds": 1,
+                "periodSeconds": 10,
+                "successThreshold": 1,
+                "failureThreshold": 5,
+                "handler": {
+                  "type": "HTTP",
+                  "execAction": {
+                    "commands": []
+                  },
+                  "httpGetAction": {
+                    "path": "/",
+                    "port": 8080,
+                    "uriScheme": "HTTP"
+                  },
+                  "tcpSocketAction": {
+                    "port": 80
+                  }
+                }
+              },
+              "envVars": [],
+              "command": [],
+              "args": [],
+              "volumeMounts": [
+                {
+                  "name": "spinnaker-config",
+                  "readOnly": false,
+                  "mountPath": "/opt/front50/config"
+                }
+              ]
+            }
+          ],
+          "volumeSources": [
+            {
+              "type": "SECRET",
+              "name": "spinnaker-config",
+              "hostPath": {
+                "path": "/"
+              },
+              "emptyDir": {
+                "medium": "DEFAULT"
+              },
+              "defaultPersistentVolumeClaim": {
+                "claimName": "",
+                "readOnly": true
+              },
+              "secret": {
+                "secretName": "spinnaker-config"
+              }
+            }
+          ],
+          "interestingHealthProviderNames": [
+            "KubernetesContainer",
+            "KubernetesPod"
+          ],
+          "stack": "front50",
+          "scaleDown": true,
+          "maxRemainingAsgs": 2,
+          "provider": "kubernetes",
+          "region": "default",
+          "loadBalancers": [
+            "spin-front50"
+          ]
+        }
+      ]
+    }
+  ],
+  "triggers": []
+}

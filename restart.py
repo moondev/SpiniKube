@@ -78,8 +78,15 @@ for component in components:
 
 os.system("kubectl create --namespace spinnaker -f sets/registry-proxy.yml")
 
+os.system("kubectl create -f kubedash/bundle.yaml")
+
+os.system("kubectl create -f tectonic/pull.yml")
+os.system("kubectl create -f tectonic/tectonic-console.yaml")
+os.system("kubectl create -f tectonic/tectonic.json")
 
 poll("ContainerCreating")
+
+time.sleep(60)
 
 services = '''
 {
@@ -140,4 +147,4 @@ time.sleep(1)
 
 poll("ContainerCreating")
 
-os.system('minikube service spin-start --namespace spinnaker')
+#os.system('minikube service spin-start --namespace spinnaker')
