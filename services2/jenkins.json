@@ -1,0 +1,27 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "spinnaker-jenkins"
+    },
+    "spec": {
+        "selector": {
+            "app": "spinnaker-jenkins"
+        },
+        "type": "NodePort",
+        "ports": [
+            {
+                "name": "jenkins",
+                "protocol": "TCP",
+                "port": 8080,
+                "targetPort": 8080
+            },
+                        {
+                "name": "jnlp",
+                "protocol": "TCP",
+                "port": 50000,
+                "targetPort": 50000
+            }
+        ]
+    }
+}

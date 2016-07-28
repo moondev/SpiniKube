@@ -1,0 +1,20 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "spinnaker-rosco"
+    },
+    "spec": {
+        "selector": {
+            "app": "spinnaker-rosco"
+        },
+        "ports": [
+            {
+                "name": "rosco",
+                "protocol": "TCP",
+                "port": 8087,
+                "targetPort": 8087
+            }
+        ]
+    }
+}

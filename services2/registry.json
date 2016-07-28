@@ -1,0 +1,21 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "spinnaker-registry"
+    },
+    "spec": {
+        "selector": {
+            "app": "spinnaker-registry"
+        },
+        "type": "NodePort",
+        "ports": [
+            {
+                "name": "registry",
+                "protocol": "TCP",
+                "port": 5000,
+                "targetPort": 5000
+            }
+        ]
+    }
+}

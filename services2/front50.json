@@ -1,0 +1,20 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "spinnaker-front50"
+    },
+    "spec": {
+        "selector": {
+            "app": "spinnaker-front50"
+        },
+        "ports": [
+            {
+                "name": "front50",
+                "protocol": "TCP",
+                "port": 8080,
+                "targetPort": 8080
+            }
+        ]
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "spinnaker-orca"
+    },
+    "spec": {
+        "selector": {
+            "app": "spinnaker-orca"
+        },
+        "ports": [
+            {
+                "name": "orca",
+                "protocol": "TCP",
+                "port": 8083,
+                "targetPort": 8083
+            }
+        ]
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "spinnaker-registryui"
+    },
+    "spec": {
+        "selector": {
+            "app": "spinnaker-registryui"
+        },
+        "type": "NodePort",
+        "ports": [
+            {
+                "name": "ui",
+                "protocol": "TCP",
+                "port": 8080,
+                "targetPort": 8080
+            }
+        ]
+    }
+}

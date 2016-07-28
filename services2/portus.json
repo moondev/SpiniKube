@@ -1,0 +1,21 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "spin-port"
+    },
+    "spec": {
+        "selector": {
+            "app": "spin-port"
+        },
+        "type": "NodePort",
+        "ports": [
+            {
+                "name": "port",
+                "protocol": "TCP",
+                "port": 3000,
+                "targetPort": 3000
+            }
+        ]
+    }
+}

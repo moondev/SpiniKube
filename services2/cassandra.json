@@ -1,0 +1,26 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "spinnaker-cassandra"
+    },
+    "spec": {
+        "selector": {
+            "app": "spinnaker-cassandra"
+        },
+        "ports": [
+            {
+                "name": "thrift",
+                "protocol": "TCP",
+                "port": 9160,
+                "targetPort": 9160
+            },
+                        {
+                "name": "cql",
+                "protocol": "TCP",
+                "port": 9042,
+                "targetPort": 9042
+            }
+        ]
+    }
+}

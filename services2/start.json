@@ -1,0 +1,21 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "spinnaker-start"
+    },
+    "spec": {
+        "selector": {
+            "app": "spinnaker-start"
+        },
+        "type": "NodePort",
+        "ports": [
+            {
+                "name": "start",
+                "protocol": "TCP",
+                "port": 80,
+                "targetPort": 80
+            }
+        ]
+    }
+}

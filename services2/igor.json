@@ -1,0 +1,20 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "spinnaker-igor"
+    },
+    "spec": {
+        "selector": {
+            "app": "spinnaker-igor"
+        },
+        "ports": [
+            {
+                "name": "igor",
+                "protocol": "TCP",
+                "port": 8088,
+                "targetPort": 8088
+            }
+        ]
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "spinnaker-gate"
+    },
+    "spec": {
+        "selector": {
+            "app": "spinnaker-gate"
+        },
+        "ports": [
+            {
+                "name": "gate",
+                "protocol": "TCP",
+                "port": 8084,
+                "targetPort": 8084
+            }
+        ]
+    }
+}

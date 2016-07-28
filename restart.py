@@ -61,7 +61,11 @@ time.sleep(1)
 
 os.system("kubectl create secret generic spinnaker-config --from-file=./config/echo.yml --from-file=./config/igor.yml --from-file=./config/gate.yml --from-file=./config/orca.yml --from-file=./config/rosco.yml --from-file=./config/front50.yml --from-file=./config/clouddriver.yml --namespace spinnaker")
 
+os.system("kubectl create secret generic spinnaker-config --from-file=./config2/echo.yml --from-file=./config2/igor.yml --from-file=./config2/gate.yml --from-file=./config2/orca.yml --from-file=./config2/rosco.yml --from-file=./config2/front50.yml --from-file=./config2/clouddriver.yml")
+
 os.system("kubectl create secret generic minikube-config --from-file=./minikube/config --from-file=./minikube/ca.crt --from-file=./minikube/apiserver.crt --from-file=./minikube/apiserver.key --namespace spinnaker")
+
+os.system("kubectl create secret generic minikube-config --from-file=./minikube/config --from-file=./minikube/ca.crt --from-file=./minikube/apiserver.crt --from-file=./minikube/apiserver.key")
 
 os.system("kubectl create secret generic nginx-config --from-file=./nginx/nginx.conf --namespace spinnaker")
 
@@ -76,13 +80,17 @@ for component in components:
   os.system("kubectl create --namespace spinnaker -f services/" + component + ".json")
   time.sleep(1)
 
+for component in components:
+  os.system("kubectl create -f services2/" + component + ".json")
+  time.sleep(1)
+
 os.system("kubectl create --namespace spinnaker -f sets/registry-proxy.yml")
 
 os.system("kubectl create -f kubedash/bundle.yaml")
 
-os.system("kubectl create -f tectonic/pull.yml")
-os.system("kubectl create -f tectonic/tectonic-console.yaml")
-os.system("kubectl create -f tectonic/tectonic.json")
+os.system("kubectl create -f tectonic/pull.yml --namespace kube-system")
+os.system("kubectl create -f tectonic/tectonic-console.yaml --namespace kube-system")
+os.system("kubectl create -f tectonic/tectonic.json --namespace kube-system")
 
 poll("ContainerCreating")
 
