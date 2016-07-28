@@ -123,7 +123,7 @@ $.getJSON( "/services.json", function( data ) {
 
   $.each( data.services, function( key, val ) {
     $("#top").append('<a href="' + val.link + '" class="nav item">' + val.title + '</a>');
-    $("#cards").append('<div class="column"><div class="ui fluid raised link card"><div class="content"><div class="header">' + val.title + '</div><div class="meta"><span class="category">descrip</span></div><div class="description"><p>descrip</p></div></div></div></div>');
+    $("#cards").append('<a href="' + val.link + '"><div class="column"><div class="ui fluid raised link card"><div class="content"><div class="header">' + val.title + '</div><div class="meta"><span class="category">' + val.description + '</span></div><div class="description"><p></p></div></div></div></div></a>');
   });
 
   $('.nav').click(function(){
