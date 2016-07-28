@@ -1,0 +1,109 @@
+{
+  "keepWaitingPipelines": false,
+  "limitConcurrent": true,
+  "parallel": true,
+  "stages": [
+    {
+      "refId": "1",
+      "requisiteStageRefIds": [],
+      "type": "jenkins",
+      "name": "Jenkins",
+      "failPipeline": true,
+      "continuePipeline": false,
+      "master": "jenkins",
+      "job": "spinnaker-clouddriver",
+      "parameters": {}
+    },
+    {
+      "refId": "2",
+      "requisiteStageRefIds": [
+        "1"
+      ],
+      "type": "deploy",
+      "name": "Deploy",
+      "clusters": [
+        {
+          "account": "my-kubernetes-account",
+          "application": "spinnaker",
+          "strategy": "redblack",
+          "targetSize": 1,
+          "cloudProvider": "kubernetes",
+          "namespace": "default",
+          "containers": [
+            {
+              "name": "front50",
+              "imageDescription": {
+                "repository": "front50",
+                "tag": "latest",
+                "imageId": "localhost:5000/clouddriver:latest",
+                "registry": "localhost:5000",
+                "account": "localhost"
+              },
+              "requests": {
+                "memory": null,
+                "cpu": null
+              },
+              "limits": {
+                "memory": null,
+                "cpu": null
+              },
+              "ports": [
+                {
+                  "name": "http",
+                  "containerPort": 7002,
+                  "protocol": "TCP",
+                  "hostPort": null,
+                  "hostIp": null
+                }
+              ],
+              "livenessProbe": null,
+              "readinessProbe": null,
+              "envVars": [],
+              "command": [],
+              "args": [],
+              "volumeMounts": [
+                {
+                  "name": "spinnaker-config",
+                  "readOnly": false,
+                  "mountPath": "/opt/clouddriver/config"
+                }
+              ]
+            }
+          ],
+          "volumeSources": [
+            {
+              "type": "SECRET",
+              "name": "spinnaker-config",
+              "hostPath": {
+                "path": "/"
+              },
+              "emptyDir": {
+                "medium": "DEFAULT"
+              },
+              "defaultPersistentVolumeClaim": {
+                "claimName": "",
+                "readOnly": true
+              },
+              "secret": {
+                "secretName": "spinnaker-config"
+              }
+            }
+          ],
+          "interestingHealthProviderNames": [
+            "KubernetesContainer",
+            "KubernetesPod"
+          ],
+          "stack": "clouddriver",
+          "scaleDown": true,
+          "maxRemainingAsgs": 2,
+          "loadBalancers": [
+            "spinnaker-clouddriver"
+          ],
+          "provider": "kubernetes",
+          "region": "default"
+        }
+      ]
+    }
+  ],
+  "triggers": []
+}

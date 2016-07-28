@@ -72,7 +72,7 @@ os.system("kubectl create secret generic nginx-config --from-file=./nginx/nginx.
 os.system("rm -rf minikube")
 
 
-components = ('cassandra', 'redis', 'front50', 'clouddriver', 'rosco', 'orca', 'gate', 'jenkins', 'igor', 'registry', 'registryui', 'deck')
+components = ('cassandra', 'redis', 'front50', 'clouddriver', 'rosco', 'orca', 'gate', 'jenkins', 'igor', 'registry', 'registryui', 'debweb', 'deck')
 
 for component in components:
   os.system("kubectl create --namespace spinnaker -f sets/" + component + ".yml")
@@ -141,6 +141,11 @@ services = '''
     "title": "Container Image Registry",
     "description": "Local image repository",
     "link": "''' + cmdOut("minikube service spin-registryui --namespace spinnaker --url") + '''"
+    },
+    {
+    "title": "Apt Repository",
+    "description": "Local apt repository",
+    "link": "''' + cmdOut("minikube service spin-debweb --namespace spinnaker --url") + '''"
     }
 
 ]

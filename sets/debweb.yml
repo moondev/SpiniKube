@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: spin-debweb
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: spin-debweb
+    spec:
+      volumes:
+      - name: spinnaker-config
+        secret:
+          secretName: spinnaker-config
+      containers:
+      - name: spin-debweb
+        image: chadmoon/debweb
+        ports:
+        - containerPort: 80
+        - containerPort: 3000
+        command:
+          - "bash"
+          - "-c"
+          - "cd /debweb; rails s -b 0.0.0.0"
