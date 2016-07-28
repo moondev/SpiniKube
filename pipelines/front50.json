@@ -36,9 +36,9 @@
               "imageDescription": {
                 "repository": "front50",
                 "tag": "latest",
-                "imageId": "spin-registry:5000/front50:latest",
-                "registry": "spin-registry:5000",
-                "account": "spinnaker-registry"
+                "imageId": "localhost:5000/front50:latest",
+                "registry": "localhost:5000",
+                "account": "localhost"
               },
               "requests": {
                 "memory": null,
@@ -51,34 +51,12 @@
               "ports": [
                 {
                   "name": "http",
-                  "containerPort": 8087,
+                  "containerPort": 8080,
                   "protocol": "TCP",
                   "hostPort": null,
                   "hostIp": null
                 }
               ],
-              "livenessProbe": null,
-              "readinessProbe": {
-                "initialDelaySeconds": 20,
-                "timeoutSeconds": 1,
-                "periodSeconds": 10,
-                "successThreshold": 1,
-                "failureThreshold": 5,
-                "handler": {
-                  "type": "HTTP",
-                  "execAction": {
-                    "commands": []
-                  },
-                  "httpGetAction": {
-                    "path": "/",
-                    "port": 8080,
-                    "uriScheme": "HTTP"
-                  },
-                  "tcpSocketAction": {
-                    "port": 80
-                  }
-                }
-              },
               "envVars": [],
               "command": [],
               "args": [],
@@ -107,6 +85,10 @@
               },
               "secret": {
                 "secretName": "spinnaker-config"
+              },
+              "persistentVolumeClaim": {
+                "claimName": "",
+                "readOnly": true
               }
             }
           ],
