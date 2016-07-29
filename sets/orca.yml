@@ -21,6 +21,3 @@ spec:
         image: quay.io/spinnaker/orca
         ports:
         - containerPort: 8083
-        resources: 
-          limits: 
-            memory: 600Mi

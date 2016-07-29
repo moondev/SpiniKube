@@ -2,18 +2,19 @@
     "kind": "Service",
     "apiVersion": "v1",
     "metadata": {
-        "name": "spin-gate"
+        "name": "spinnaker-nginx"
     },
     "spec": {
         "selector": {
-            "app": "spinnaker-gate"
+            "app": "spinnaker-nginx"
         },
+        "type": "NodePort",
         "ports": [
             {
-                "name": "gate",
+                "name": "deck",
                 "protocol": "TCP",
-                "port": 8084,
-                "targetPort": 8084
+                "port": 80,
+                "targetPort": 80
             }
         ]
     }
