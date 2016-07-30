@@ -36,7 +36,7 @@ os.system("python restart.py")
 
 
 
-
+time.sleep(10)
 
 poll()
 

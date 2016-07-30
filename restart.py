@@ -1,4 +1,3 @@
-import yaml
 import os
 import time
 import collections
@@ -19,9 +18,9 @@ def poll(search):
     time.sleep(2)
 
 os.system("kubectl delete namespace spinnaker")
-time.sleep(2)
+time.sleep(10)
 poll("Terminating")
-
+time.sleep(10)
 os.system("kubectl create namespace spinnaker")
 
 os.system("rm -rf minikube")
@@ -98,7 +97,7 @@ os.system("kubectl create -f kubedash/bundle.yaml")
 os.system("kubectl create -f tectonic/pull.yml")
 os.system("kubectl create -f tectonic/tectonic-console.yaml")
 os.system("kubectl create -f tectonic/tectonic.json")
-
+time.sleep(10)
 poll("ContainerCreating")
 
 time.sleep(60)
