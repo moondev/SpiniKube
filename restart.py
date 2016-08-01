@@ -71,24 +71,20 @@ os.system("kubectl create secret generic nginx-config --from-file=./nginx/nginx.
 os.system("rm -rf minikube")
 
 
-components = ('cassandra', 'redis', 'front50', 'clouddriver', 'rosco', 'orca', 'gate', 'jenkins', 'igor', 'registry', 'registryui', 'debweb', 'deck')
+components1= ( 'jenkins', 'registry', 'registryui', 'debweb')
+components2 = ('cassandra', 'redis', 'front50', 'clouddriver', 'rosco', 'orca', 'gate', 'igor', 'deck')
 
-for component in components:
+for component in components1:
   os.system("kubectl create --namespace spinnaker -f sets/" + component + ".yml")
   time.sleep(1)
   os.system("kubectl create --namespace spinnaker -f services/" + component + ".json")
   time.sleep(1)
 
-for component in components:
-  os.system("kubectl delete -f services2/" + component + ".json")
-  time.sleep(1)
-
-for component in components:
-  os.system("kubectl create -f services2/" + component + ".json")
-  time.sleep(1)
-
-os.system("kubectl create -f sets2/cassandra.yml")
-os.system("kubectl create -f sets2/redis.yml")
+# for component in components2:
+#   os.system("kubectl delete -f yaml/" + component + ".yml")
+#   time.sleep(1)
+#   os.system("kubectl create -f yaml/" + component + ".json")
+#   time.sleep(1)
 
 os.system("kubectl create --namespace spinnaker -f sets/registry-proxy.yml")
 
@@ -102,15 +98,19 @@ poll("ContainerCreating")
 
 time.sleep(60)
 
+
+
+    #       {
+    # "title": "Spinnaker Dashboard",
+    # "description": "Spinnaker UI",
+    # "link": "''' + cmdOut("minikube service spin-deck --namespace spinnaker --url") + '''"
+    # },
+
 services = '''
 {
 "services" : [
 
-          {
-    "title": "Spinnaker Dashboard",
-    "description": "Spinnaker UI",
-    "link": "''' + cmdOut("minikube service spin-deck --namespace spinnaker --url") + '''"
-    },
+
 
     {
     "title": "Kubernetes Dashboard",
@@ -165,5 +165,18 @@ time.sleep(1)
 
 
 poll("ContainerCreating")
+
+jenkins = cmdOut("minikube service spin-jenkins --namespace spinnaker --url")
+
+components = ('front50', 'clouddriver', 'rosco', 'orca', 'gate', 'igor', 'deck')
+
+for component in components:
+  os.system("curl -XPOST --silent --show-error --user jenkins:jenkins " + jenkins + "/job/spinnaker-" + component + "/build " + '--data-urlencode json=\'{"parameter": [{"name":"SERVICE", "value":"' + component + '"}]}\'')
+  
+  done = 0
+  print "Building " + component
+  while done == 0:
+    done = ('curl ' + jenkins + "/job/spinnaker-" + component + '/lastBuild/api/json | grep --color result\":null' )
+    time.sleep(2)
 
 #os.system('minikube service spin-start --namespace spinnaker')

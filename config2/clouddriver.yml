@@ -30,7 +30,7 @@ dockerRegistry:
     name: dockerhub
     repositories:
     - library/nginx
-  - address: http://spinnaker-registry:5000/v2
+  - address: http://spinnaker-registry.spinnaker:5000/v2
     name: spinnaker-registry
   enabled: true
 
