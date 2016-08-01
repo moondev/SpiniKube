@@ -4,35 +4,32 @@ kind: "ReplicationController"
 metadata:
   labels:
     load-balancer-spinnaker-gate: "true"
-    replication-controller: "spinnaker-orca-v000"
-  name: "spinnaker-orca-v000"
+    replication-controller: "spinnaker-deck-v000"
+  name: "spinnaker-deck-v000"
   namespace: "default"
 spec:
   replicas: 1
   selector:
-    replication-controller: "spinnaker-orca-v000"
+    replication-controller: "spinnaker-deck-v000"
   template:
     metadata:
       labels:
         load-balancer-spinnaker-gate: "true"
-        replication-controller: "spinnaker-orca-v000"
+        replication-controller: "spinnaker-deck-v000"
     spec:
       containers:
       - args: []
         command: []
         env: []
-        image: "localhost:5000/orca:latest"
+        image: "localhost:5000/deck:latest"
         imagePullPolicy: "Always"
-        name: "orca"
+        name: "deck"
         ports:
-        - containerPort: 8089
+        - containerPort: 80
           name: "http"
           protocol: "TCP"
         resources: {}
         terminationMessagePath: "/dev/termination-log"
-        volumeMounts:
-        - mountPath: "/opt/orca/config"
-          name: "spinnaker-config"
       dnsPolicy: "ClusterFirst"
       imagePullSecrets:
       - name: "dockerhub"
@@ -43,7 +40,3 @@ spec:
       securityContext:
         supplementalGroups: []
       terminationGracePeriodSeconds: 30
-      volumes:
-      - name: "spinnaker-config"
-        secret:
-          secretName: "spinnaker-config"

@@ -22,11 +22,6 @@ jenkins = cmdOut("minikube service spin-jenkins --namespace spinnaker --url")
 components = ('front50', 'clouddriver', 'rosco', 'orca', 'gate', 'igor', 'deck')
 
 for component in components:
-  os.system("curl -XPOST --silent --show-error --user jenkins:jenkins " + jenkins + "/job/spinnaker-" + component + "/build " + '--data-urlencode json=\'{"parameter": [{"name":"SERVICE", "value":"' + component + '"}]}\'')
-  
-  done = 0
-  print "Building " + component
-  while done == 0:
-    done = ('curl ' + jenkins + "/job/spinnaker-" + component + '/lastBuild/api/json | grep --color result\":null' )
-    time.sleep(2)
+  os.system("kubectl create -f yaml/" + component + ".yml")
+  time.sleep(1)
 
