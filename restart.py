@@ -173,10 +173,14 @@ components = ('front50', 'clouddriver', 'rosco', 'orca', 'gate', 'igor', 'deck')
 for component in components:
   os.system("curl -XPOST --silent --show-error --user jenkins:jenkins " + jenkins + "/job/spinnaker-" + component + "/build " + '--data-urlencode json=\'{"parameter": [{"name":"SERVICE", "value":"' + component + '"}]}\'')
   
-  done = 0
+  done = False
   print "Building " + component
-  while done == 0:
-    done = ('curl ' + jenkins + "/job/spinnaker-" + component + '/lastBuild/api/json | grep --color result\":null' )
+  while done == False:
+    result = ('curl ' + jenkins + "/job/spinnaker-" + component + '/lastBuild/api/json | grep --color result\":null' )
+    if result.find('"building":true,') != -1:
+      done = False
+    else:
+      done = True
     time.sleep(2)
 
 #os.system('minikube service spin-start --namespace spinnaker')
