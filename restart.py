@@ -113,14 +113,14 @@ for component in components:
   os.system("curl -XPOST --silent --show-error --user jenkins:jenkins " + jenkins + "/job/spinnaker-" + component + "/build " + '--data-urlencode json=\'{"parameter": [{"name":"SERVICE", "value":"' + component + '"}]}\'')
   
   done = False
-  print "Building " + component
+  print "Building " + component + " image."
   while done == False:
-    result = ('curl ' + jenkins + "/job/spinnaker-" + component + '/lastBuild/api/json | grep --color result\":null' )
-    if result.find('"building":true,') != -1:
-      done = False
-    else:
+    result = cmdOut('curl --silent ' + jenkins + "/job/spinnaker-" + component + '/lastBuild/api/json')
+    if result.find('"result":null') != -1:
       done = True
-    time.sleep(60*30)
+    else:
+      done = False
+    time.sleep(2)
 
 #os.system('minikube service spin-start --namespace spinnaker')
 
@@ -134,8 +134,9 @@ for component in components:
 
 
 
-time.sleep(30)
+time.sleep(60)
 
+print "restart line 139"
 
 services = '''
 {
@@ -144,14 +145,9 @@ services = '''
           {
     "title": "Spinnaker Dashboard",
     "description": "Spinnaker UI",
-    "link": "''' + cmdOut("minikube service spin-deck --namespace spinnaker --url") + '''"
+    "link": "''' + cmdOut("minikube service spinnaker-deck --url") + '''"
     },
 
-           {
-     "title": "Spinnaker Dashboard",
-     "description": "Spinnaker UI",
-     "link": "''' + cmdOut("minikube service spin-deck --namespace spinnaker --url") + '''"
-     },
 
 
     {
@@ -204,3 +200,5 @@ os.system("kubectl create --namespace spinnaker -f sets/start.yml")
 time.sleep(1)
 os.system("kubectl create --namespace spinnaker -f services/start.json")
 time.sleep(1)
+
+os.system('minikube service spin-start --namespace spinnaker')

@@ -2,7 +2,7 @@
     "kind": "Service",
     "apiVersion": "v1",
     "metadata": {
-        "name": "spin-gate"
+        "name": "spinnaker-gate"
     },
     "spec": {
         "selector": {
