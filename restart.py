@@ -110,6 +110,11 @@ services = '''
 {
 "services" : [
 
+           {
+     "title": "Spinnaker Dashboard",
+     "description": "Spinnaker UI",
+     "link": "''' + cmdOut("minikube service spin-deck --namespace spinnaker --url") + '''"
+     },
 
 
     {
@@ -181,6 +186,9 @@ for component in components:
       done = False
     else:
       done = True
-    time.sleep(2)
+    time.sleep(60*10)
 
 #os.system('minikube service spin-start --namespace spinnaker')
+for component in components:
+  #os.system("kubectl create -f yaml/" + component + ".yml")
+  os.system("kubectl create -f services2/" + component + ".json")

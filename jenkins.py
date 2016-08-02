@@ -5,23 +5,26 @@ import subprocess
 
 def cmdOut(cmd):
   return subprocess.check_output(cmd, shell=True).strip()
-#
-#ContainerCreating
-#Terminating
-def poll(search):
-  creating = search
-  while creating.find(search) != -1:
-    creating = cmdOut("kubectl get pods --all-namespaces")
-    os.system("clear")
-    print creating
-    print "\nworking..."
-    time.sleep(2)
 
-jenkins = cmdOut("minikube service spin-jenkins --namespace spinnaker --url")
+
+#jenkins = cmdOut("minikube service spin-jenkins --namespace spinnaker --url")
 
 components = ('front50', 'clouddriver', 'rosco', 'orca', 'gate', 'igor', 'deck')
 
-for component in components:
-  os.system("kubectl create -f yaml/" + component + ".yml")
-  time.sleep(1)
 
+for component in components:
+  os.system("curl -XPOST --silent --show-error --user jenkins:jenkins " + jenkins + "/job/spinnaker-" + component + "/build " + '--data-urlencode json=\'{"parameter": [{"name":"SERVICE", "value":"' + component + '"}]}\'')
+  
+  done = False
+  print "Building " + component
+  while done == False:
+    result = ('curl ' + jenkins + "/job/spinnaker-" + component + '/lastBuild/api/json | grep --color result\":null' )
+    if result.find('"building":true,') != -1:
+      done = False
+    else:
+      done = True
+    time.sleep(60*10)
+
+for component in components:
+  #os.system("kubectl create -f yaml/" + component + ".yml")
+  os.system("kubectl create -f services2/" + component + ".json")
