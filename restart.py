@@ -96,19 +96,56 @@ os.system("kubectl create -f tectonic/tectonic.json")
 time.sleep(10)
 poll("ContainerCreating")
 
-time.sleep(60)
+time.sleep(30)
 
 
 
-    #       {
-    # "title": "Spinnaker Dashboard",
-    # "description": "Spinnaker UI",
-    # "link": "''' + cmdOut("minikube service spin-deck --namespace spinnaker --url") + '''"
-    # },
+
+
+
+poll("ContainerCreating")
+
+jenkins = cmdOut("minikube service spin-jenkins --namespace spinnaker --url")
+
+components = ('front50', 'clouddriver', 'rosco', 'orca', 'gate', 'igor', 'deck')
+
+for component in components:
+  os.system("curl -XPOST --silent --show-error --user jenkins:jenkins " + jenkins + "/job/spinnaker-" + component + "/build " + '--data-urlencode json=\'{"parameter": [{"name":"SERVICE", "value":"' + component + '"}]}\'')
+  
+  done = False
+  print "Building " + component
+  while done == False:
+    result = ('curl ' + jenkins + "/job/spinnaker-" + component + '/lastBuild/api/json | grep --color result\":null' )
+    if result.find('"building":true,') != -1:
+      done = False
+    else:
+      done = True
+    time.sleep(60*30)
+
+#os.system('minikube service spin-start --namespace spinnaker')
+
+components = ('cassandra', 'redis', 'front50', 'clouddriver', 'rosco', 'orca', 'gate', 'igor', 'deck')
+
+for component in components:
+  os.system("kubectl create -f services2/" + component + ".json")
+  time.sleep(2)
+  os.system("kubectl create -f yaml/" + component + ".yml")
+  time.sleep(2)
+
+
+
+time.sleep(30)
+
 
 services = '''
 {
 "services" : [
+
+          {
+    "title": "Spinnaker Dashboard",
+    "description": "Spinnaker UI",
+    "link": "''' + cmdOut("minikube service spin-deck --namespace spinnaker --url") + '''"
+    },
 
            {
      "title": "Spinnaker Dashboard",
@@ -167,28 +204,3 @@ os.system("kubectl create --namespace spinnaker -f sets/start.yml")
 time.sleep(1)
 os.system("kubectl create --namespace spinnaker -f services/start.json")
 time.sleep(1)
-
-
-poll("ContainerCreating")
-
-jenkins = cmdOut("minikube service spin-jenkins --namespace spinnaker --url")
-
-components = ('front50', 'clouddriver', 'rosco', 'orca', 'gate', 'igor', 'deck')
-
-for component in components:
-  os.system("curl -XPOST --silent --show-error --user jenkins:jenkins " + jenkins + "/job/spinnaker-" + component + "/build " + '--data-urlencode json=\'{"parameter": [{"name":"SERVICE", "value":"' + component + '"}]}\'')
-  
-  done = False
-  print "Building " + component
-  while done == False:
-    result = ('curl ' + jenkins + "/job/spinnaker-" + component + '/lastBuild/api/json | grep --color result\":null' )
-    if result.find('"building":true,') != -1:
-      done = False
-    else:
-      done = True
-    time.sleep(60*10)
-
-#os.system('minikube service spin-start --namespace spinnaker')
-for component in components:
-  #os.system("kubectl create -f yaml/" + component + ".yml")
-  os.system("kubectl create -f services2/" + component + ".json")
