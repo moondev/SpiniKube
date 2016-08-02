@@ -200,5 +200,3 @@ os.system("kubectl create --namespace spinnaker -f sets/start.yml")
 time.sleep(1)
 os.system("kubectl create --namespace spinnaker -f services/start.json")
 time.sleep(1)
-
-os.system('minikube service spin-start --namespace spinnaker')
