@@ -1,0 +1,21 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "spinnaker-deck"
+    },
+    "spec": {
+        "selector": {
+            "app": "spinnaker-deck"
+        },
+        "type": "NodePort",
+        "ports": [
+            {
+                "name": "clouddriver",
+                "protocol": "TCP",
+                "port": 80,
+                "targetPort": 80
+            }
+        ]
+    }
+}

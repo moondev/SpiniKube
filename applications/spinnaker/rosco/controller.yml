@@ -1,0 +1,50 @@
+---
+apiVersion: "v1"
+kind: "ReplicationController"
+metadata:
+  labels:
+    load-balancer-spinnaker-rosco: "true"
+    replication-controller: "spinnaker-rosco-v000"
+  name: "spinnaker-rosco-v000"
+  namespace: "spinnaker"
+spec:
+  replicas: 1
+  selector:
+    replication-controller: "spinnaker-rosco-v000"
+  template:
+    metadata:
+      labels:
+        load-balancer-spinnaker-front50: "true"
+        replication-controller: "spinnaker-rosco-v000"
+        app: "spinnaker-rosco"
+    spec:
+      containers:
+      - args: []
+        command: []
+        env: []
+        image: "quay.io/spinnaker/rosco:latest"
+        imagePullPolicy: "Always"
+        name: "rosco"
+        ports:
+        - containerPort: 8087
+          name: "http"
+          protocol: "TCP"
+        resources: {}
+        terminationMessagePath: "/dev/termination-log"
+        volumeMounts:
+        - mountPath: "/opt/rosco/config"
+          name: "spinnaker-config"
+      dnsPolicy: "ClusterFirst"
+      imagePullSecrets:
+      - name: "dockerhub"
+      - name: "spinnaker-registry"
+      - name: "dockerhub"
+      - name: "spinnaker-registry"
+      restartPolicy: "Always"
+      securityContext:
+        supplementalGroups: []
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: "spinnaker-config"
+        secret:
+          secretName: "spinnaker-config"

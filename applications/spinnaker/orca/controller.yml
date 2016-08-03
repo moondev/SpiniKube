@@ -1,0 +1,50 @@
+---
+apiVersion: "v1"
+kind: "ReplicationController"
+metadata:
+  labels:
+    load-balancer-spinnaker-orca: "true"
+    replication-controller: "spinnaker-orca-v000"
+  name: "spinnaker-orca-v000"
+  namespace: "spinnaker"
+spec:
+  replicas: 1
+  selector:
+    replication-controller: "spinnaker-orca-v000"
+  template:
+    metadata:
+      labels:
+        load-balancer-spinnaker-orca: "true"
+        replication-controller: "spinnaker-orca-v000"
+        app: "spinnaker-orca"
+    spec:
+      containers:
+      - args: []
+        command: []
+        env: []
+        image: "quay.io/spinnaker/orca:latest"
+        imagePullPolicy: "Always"
+        name: "orca"
+        ports:
+        - containerPort: 8083
+          name: "http"
+          protocol: "TCP"
+        resources: {}
+        terminationMessagePath: "/dev/termination-log"
+        volumeMounts:
+        - mountPath: "/opt/orca/config"
+          name: "spinnaker-config"
+      dnsPolicy: "ClusterFirst"
+      imagePullSecrets:
+      - name: "dockerhub"
+      - name: "spinnaker-registry"
+      - name: "dockerhub"
+      - name: "spinnaker-registry"
+      restartPolicy: "Always"
+      securityContext:
+        supplementalGroups: []
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: "spinnaker-config"
+        secret:
+          secretName: "spinnaker-config"

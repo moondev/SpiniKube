@@ -1,0 +1,44 @@
+Started by user [8mha:AAAAmR+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAz2EgZe/dLi1CL9rNS87My8YgDGtiJjwgAAAA==[0mjenkins
+Building in workspace /usr/local/jenkins/workspace/nginx
+[WS-CLEANUP] Deleting project workspace...
+[WS-CLEANUP] Done
+[nginx] $ /bin/sh -xe /tmp/hudson8600764737328163651.sh
++ echo <h1>new website dude</h1>
++ cat
++ docker build -t spinnaker-registry:5000/nginxapp .
+Sending build context to Docker daemon 3.072 kB
+Step 1 : FROM nginx:latest
+ ---> 0d409d33b27e
+Step 2 : MAINTAINER delivery-engineering@netflix.com
+ ---> Using cache
+ ---> 4323330de029
+Step 3 : COPY . /usr/share/nginx/html
+ ---> 4f1c51fd4df3
+Removing intermediate container 2cd49a289561
+Step 4 : EXPOSE 80 443
+ ---> Running in 3363098993ca
+ ---> 31687ca8296c
+Removing intermediate container 3363098993ca
+Step 5 : CMD nginx -g daemon off;
+ ---> Running in 3141963afb1c
+ ---> 868585da9639
+Removing intermediate container 3141963afb1c
+Successfully built 868585da9639
++ docker push spinnaker-registry:5000/nginxapp
+The push refers to a repository [spinnaker-registry:5000/nginxapp]
+6fb7b4064524: Preparing
+5f70bf18a086: Preparing
+5f70bf18a086: Preparing
+bbf4634aee1a: Preparing
+64d0c8aee4b0: Preparing
+5f70bf18a086: Preparing
+5f70bf18a086: Preparing
+5f70bf18a086: Preparing
+4dcab49015d4: Preparing
+4dcab49015d4: Layer already exists
+5f70bf18a086: Layer already exists
+bbf4634aee1a: Layer already exists
+64d0c8aee4b0: Layer already exists
+6fb7b4064524: Pushed
+latest: digest: sha256:fdf3fdfcf0bd3d551b0da41e0bb35d355057bf621501cbe19437f42d0a722df1 size: 2185
+Finished: SUCCESS

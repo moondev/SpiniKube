@@ -23,6 +23,7 @@ kubernetes:
       dockerRegistries:
         - accountName: dockerhub
         - accountName: spinnaker-registry
+        - accountName: spinnaker-local
 
 dockerRegistry:
   accounts:
@@ -31,15 +32,17 @@ dockerRegistry:
     repositories:
     - library/nginx
   - address: http://localhost:5000/v2
+    name: spinnaker-local
+  - address: http://spinnaker-registry:5000/v2
     name: spinnaker-registry
   enabled: true
 
 redis:
-  connection: redis://spin-redis:6379
+  connection: redis://spinnaker-redis:6379
 server:
   port: 7002
 services:
   front50:
-    baseUrl: http://spin-front50:8080
+    baseUrl: http://spinnaker-front50:8080
 udf:
   enabled: false

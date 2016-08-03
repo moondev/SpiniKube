@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+COLUMNS=`tput cols`
+LINES=`tput lines`
+TERM=xterm
+GETPOD=`kubectl get pods --selector app=spinnaker-$1 --no-headers=true --namespace spinnaker`
+POD="$GETPOD"
+PODID=( $POD )
+PODID=${PODID[0]}
+
+CMD=$2
+kubectl exec --namespace spinnaker -i -t $PODID env COLUMNS=$COLUMNS LINES=$LINES TERM=$TERM $2

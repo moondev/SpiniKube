@@ -1,0 +1,6 @@
+Started from command line by [8mha:AAAAmR+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAz2EgZe/dLi1CL9rNS87My8YgDGtiJjwgAAAA==[0mjenkins
+Building in workspace /usr/local/jenkins/workspace/seed-images
+[seed-images] $ /bin/sh -xe /tmp/hudson5577539733474739033.sh
+/tmp/hudson5577539733474739033.sh: line 2: syntax error: unexpected "("
+Build step 'Execute shell' marked build as failure
+Finished: FAILURE

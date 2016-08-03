@@ -1,0 +1,27 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "spinnaker-debweb"
+    },
+    "spec": {
+        "selector": {
+            "app": "spinnaker-debweb"
+        },
+        "type": "NodePort",
+        "ports": [
+            {
+                "name": "debweb",
+                "protocol": "TCP",
+                "port": 3000,
+                "targetPort": 3000
+            },
+             {
+                "name": "aptly",
+                "protocol": "TCP",
+                "port": 80,
+                "targetPort": 80
+            }
+        ]
+    }
+}

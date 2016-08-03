@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>SERVICE</name>
+          <description></description>
+          <defaultValue>igor</defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@2.5.2">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>https://github.com/spinnaker/${SERVICE}.git</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/master</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions/>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>docker run --rm -v `pwd`:/workdir java:8 bash -c &quot;cd /workdir; GRADLE_USER_HOME=cache ./gradlew buildDeb -x test&quot;
+
+cd ${SERVICE}-web/build/distributions
+
+rm -f Dockerfile
+
+cat &lt;&lt;EOT &gt;&gt; Dockerfile
+
+FROM java:8
+
+MAINTAINER cmoon@kenzan.com
+
+COPY *.deb /deb/${SERVICE}.deb
+RUN cd /deb &amp;&amp; dpkg -i ${SERVICE}.deb
+RUN rm /deb/${SERVICE}.deb
+CMD [&quot;/opt/${SERVICE}/bin/${SERVICE}&quot;]
+
+EOT
+
+docker build --rm -t spinnaker-registry:5000/${SERVICE} .
+docker push spinnaker-registry:5000/${SERVICE}</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts>${SERVICE}-web/build/distributions/*.deb</artifacts>
+      <allowEmptyArchive>false</allowEmptyArchive>
+      <onlyIfSuccessful>false</onlyIfSuccessful>
+      <fingerprint>false</fingerprint>
+      <defaultExcludes>true</defaultExcludes>
+      <caseSensitive>true</caseSensitive>
+    </hudson.tasks.ArtifactArchiver>
+  </publishers>
+  <buildWrappers/>
+</project>

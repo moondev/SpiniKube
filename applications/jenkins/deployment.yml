@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: spinnaker-jenkins
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: spinnaker-jenkins
+    spec:
+      containers:
+      - name: spinnaker-jenkins
+        securityContext:
+          privileged: true
+        image: chadmoon/jenkins-dind
+        ports:
+        - containerPort: 8080
+        - containerPort: 50000
+        command:
+          - "bash"
+          - "-c"
+          - "nohup dockerd-entrypoint.sh --insecure-registry spinnaker-registry:5000 & sleep 5; cd /usr/local/jenkins; rm -rf jobs; git clone https://github.com/moondev/SpiniKube.git spinikube; mv spinikube/jobs jobs; java -jar /usr/local/jenkins/jenkins.war"

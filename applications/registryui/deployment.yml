@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: spinnaker-registryui
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: spinnaker-registryui
+    spec:
+      containers:
+      - name: spinnaker-registryui
+        image: hyper/docker-registry-web
+        ports:
+        - containerPort: 8080
+        env:
+        - name: REGISTRY_URL
+          value: http://spinnaker-registry:5000/v2
+        - name: REGISTRY_NAME
+          value: spinnaker-registry

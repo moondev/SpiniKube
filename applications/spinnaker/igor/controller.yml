@@ -1,0 +1,50 @@
+---
+apiVersion: "v1"
+kind: "ReplicationController"
+metadata:
+  labels:
+    load-balancer-spinnaker-igor: "true"
+    replication-controller: "spinnaker-igor-v000"
+  name: "spinnaker-igor-v000"
+  namespace: "spinnaker"
+spec:
+  replicas: 1
+  selector:
+    replication-controller: "spinnaker-igor-v000"
+  template:
+    metadata:
+      labels:
+        load-balancer-spinnaker-igor: "true"
+        replication-controller: "spinnaker-igor-v000"
+        app: "spinnaker-igor"
+    spec:
+      containers:
+      - args: []
+        command: []
+        env: []
+        image: "quay.io/spinnaker/igor:latest"
+        imagePullPolicy: "Always"
+        name: "igor"
+        ports:
+        - containerPort: 8088
+          name: "http"
+          protocol: "TCP"
+        resources: {}
+        terminationMessagePath: "/dev/termination-log"
+        volumeMounts:
+        - mountPath: "/opt/igor/config"
+          name: "spinnaker-config"
+      dnsPolicy: "ClusterFirst"
+      imagePullSecrets:
+      - name: "dockerhub"
+      - name: "spinnaker-registry"
+      - name: "dockerhub"
+      - name: "spinnaker-registry"
+      restartPolicy: "Always"
+      securityContext:
+        supplementalGroups: []
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: "spinnaker-config"
+        secret:
+          secretName: "spinnaker-config"

@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: spinnaker-start
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: spinnaker-start
+    spec:
+      volumes:
+      - name: start-config
+        secret:
+          secretName: start-config
+      containers:
+      - name: start-panel
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: start-config
+        image: nginx
+        ports:
+        - containerPort: 80

@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>SERVICE</name>
+          <description></description>
+          <defaultValue>deck</defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@2.5.2">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>https://github.com/spinnaker/${SERVICE}.git</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/master</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions/>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>rm -rf webpack
+mkdir webpack
+chmod 0777 -R webpack
+
+docker run -v `pwd`/webpack:/opt/webpack quay.io/spinnaker/deck bash -c &quot;npm install; npm run build; mv -v build/webpack/* /opt/webpack&quot;
+
+
+ls -ll
+cd webpack
+ls -ll
+rm settings.js
+
+cat &lt;&lt;EOT &gt;&gt; settings.js
+
+
+
+
+webpackJsonp([1,3],[
+/* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {&apos;use strict&apos;;
+
+	var feedbackUrl = process.env.FEEDBACK_URL || &apos;https://hootch.test.netflix.net/submit&apos;;
+	var gateHost = &quot;/gate&quot; || &apos;https://spinnaker-api-prestaging.mgmttest.netflix.net&apos;;
+	var bakeryDetailUrl = &quot;/bakery&quot; || &apos;http://bakery.test.netflix.net/#/?region={{context.region}}&amp;package={{context.package}}&amp;detail=bake:{{context.status.resourceId}}&apos;;
+	var authEndpoint = process.env.AUTH_ENDPOINT || &apos;https://spinnaker-api-prestaging.mgmttest.netflix.net/auth/user&apos;;
+
+	window.spinnakerSettings = {
+	  checkForUpdates: true,
+	  defaultProviders: [&apos;aws&apos;, &apos;gce&apos;, &apos;azure&apos;, &apos;cf&apos;, &apos;kubernetes&apos;, &apos;titus&apos;, &apos;openstack&apos;],
+	  feedbackUrl: feedbackUrl,
+	  gateUrl: gateHost,
+	  bakeryDetailUrl: bakeryDetailUrl,
+	  authEndpoint: authEndpoint,
+	  pollSchedule: 30000,
+	  defaultTimeZone: process.env.TIMEZONE || &apos;America/Los_Angeles&apos;, // see http://momentjs.com/timezone/docs/#/data-utilities/
+	  defaultCategory: &apos;serverGroup&apos;,
+	  defaultInstancePort: 80,
+	  providers: {
+	    azure: {
+	      defaults: {
+	        account: &apos;azure-test&apos;,
+	        region: &apos;westus&apos;
+	      }
+	    },
+	    aws: {
+	      defaults: {
+	        account: &apos;test&apos;,
+	        region: &apos;us-east-1&apos;
+	      },
+	      defaultSecurityGroups: [&apos;nf-datacenter-vpc&apos;, &apos;nf-infrastructure-vpc&apos;, &apos;nf-datacenter&apos;, &apos;nf-infrastructure&apos;],
+	      loadBalancers: {
+	        // if true, VPC load balancers will be created as internal load balancers if the selected subnet has a purpose
+	        // tag that starts with &quot;internal&quot;
+	        inferInternalFlagFromSubnet: false
+	      },
+	      useAmiBlockDeviceMappings: false
+	    },
+	    gce: {
+	      defaults: {
+	        account: &apos;my-google-account&apos;,
+	        region: &apos;us-central1&apos;,
+	        zone: &apos;us-central1-f&apos;
+	      }
+	    },
+	    titus: {
+	      defaults: {
+	        account: &apos;titustestvpc&apos;,
+	        region: &apos;us-east-1&apos;
+	      }
+	    },
+	    openstack: {
+	      defaults: {
+	        account: &apos;test&apos;,
+	        region: &apos;us-west-1&apos;
+	      }
+	    },
+	    kubernetes: {
+	      defaults: {
+	        account: &apos;my-kubernetes-account&apos;,
+	        namespace: &apos;default&apos;
+	      }
+	    }
+	  },
+	  whatsNew: {
+	    gistId: &apos;32526cd608db3d811b38&apos;,
+	    fileName: &apos;news.md&apos;
+	  },
+	  notifications: {
+	    email: {
+	      enabled: true
+	    },
+	    hipchat: {
+	      enabled: true,
+	      botName: &apos;Skynet T-800&apos;
+	    },
+	    sms: {
+	      enabled: true
+	    },
+	    slack: {
+	      enabled: true,
+	      botName: &apos;spinnakerbot&apos;
+	    }
+	  },
+	  authEnabled: false,
+	  authTtl: 600000,
+	  gitSources: [&apos;stash&apos;, &apos;github&apos;],
+	  triggerTypes: [&apos;git&apos;, &apos;pipeline&apos;, &apos;docker&apos;, &apos;cron&apos;, &apos;jenkins&apos;],
+	  feature: {
+	    pipelines: true,
+	    notifications: false,
+	    fastProperty: true,
+	    vpcMigrator: true,
+	    clusterDiff: true,
+	    roscoMode: false,
+	    netflixMode: false,
+	    // whether stages affecting infrastructure (like &quot;Create Load Balancer&quot;) should be enabled or not
+	    infrastructureStages: process.env.INFRA_STAGES === &apos;enabled&apos;,
+	    jobs: false
+	  }
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(314)))
+
+/***/ }
+]);
+
+
+EOT
+
+
+cat &lt;&lt;EOT &gt;&gt; Dockerfile
+
+FROM chadmoon/spinnaker-nginx:latest
+
+MAINTAINER cmoon@kenzan.com
+
+COPY . /opt/deck
+
+EXPOSE 80 443
+
+CMD [&quot;nginx&quot;, &quot;-g&quot;, &quot;daemon off;&quot;]
+
+EOT
+
+docker build -t spinnaker-registry:5000/deck .
+docker push spinnaker-registry:5000/deck</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>

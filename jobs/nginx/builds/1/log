@@ -1,0 +1,64 @@
+Started by user [8mha:AAAAmR+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAz2EgZe/dLi1CL9rNS87My8YgDGtiJjwgAAAA==[0mjenkins
+Building in workspace /usr/local/jenkins/workspace/nginx
+[WS-CLEANUP] Deleting project workspace...
+[nginx] $ /bin/sh -xe /tmp/hudson9131022716578693514.sh
++ echo <h1>awesome</h1>
++ cat
++ docker build -t spinnaker-registry:5000/nginxapp .
+Sending build context to Docker daemon 3.072 kB
+Step 1 : FROM nginx:latest
+latest: Pulling from library/nginx
+51f5c6a04d83: Pulling fs layer
+a3ed95caeb02: Pulling fs layer
+51d229e136d0: Pulling fs layer
+bcd41daec8cc: Pulling fs layer
+51d229e136d0: Waiting
+bcd41daec8cc: Waiting
+a3ed95caeb02: Verifying Checksum
+a3ed95caeb02: Download complete
+bcd41daec8cc: Download complete
+51f5c6a04d83: Verifying Checksum
+51f5c6a04d83: Download complete
+51d229e136d0: Verifying Checksum
+51d229e136d0: Download complete
+51f5c6a04d83: Pull complete
+a3ed95caeb02: Pull complete
+51d229e136d0: Pull complete
+bcd41daec8cc: Pull complete
+Digest: sha256:0fe6413f3e30fcc5920bc8fa769280975b10b1c26721de956e1428b9e2f29d04
+Status: Downloaded newer image for nginx:latest
+ ---> 0d409d33b27e
+Step 2 : MAINTAINER delivery-engineering@netflix.com
+ ---> Running in 489f841b65e8
+ ---> 4323330de029
+Removing intermediate container 489f841b65e8
+Step 3 : COPY . /usr/share/nginx/html
+ ---> 02028efe9216
+Removing intermediate container 75c55ec3d7e5
+Step 4 : EXPOSE 80 443
+ ---> Running in 2b792d290897
+ ---> 0742201ee55d
+Removing intermediate container 2b792d290897
+Step 5 : CMD nginx -g daemon off;
+ ---> Running in 57c1fab1093e
+ ---> 7a959d7dfbfa
+Removing intermediate container 57c1fab1093e
+Successfully built 7a959d7dfbfa
++ docker push spinnaker-registry:5000/nginxapp
+The push refers to a repository [spinnaker-registry:5000/nginxapp]
+519b16acd4b5: Preparing
+5f70bf18a086: Preparing
+5f70bf18a086: Preparing
+bbf4634aee1a: Preparing
+64d0c8aee4b0: Preparing
+5f70bf18a086: Preparing
+5f70bf18a086: Preparing
+5f70bf18a086: Preparing
+4dcab49015d4: Preparing
+519b16acd4b5: Pushed
+5f70bf18a086: Pushed
+bbf4634aee1a: Pushed
+64d0c8aee4b0: Pushed
+4dcab49015d4: Pushed
+latest: digest: sha256:a9f5f69ba48c3baef07b8596be180cb83e76b7247762acb55d8e4ae44ec36829 size: 2185
+Finished: SUCCESS

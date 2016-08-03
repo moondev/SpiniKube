@@ -2,12 +2,12 @@ aws:
   enabled: false
 docker:
   bakeryDefaults:
-    targetRepository: dockerhub
+    targetRepository: spinnaker-registry
   enabled: true
 google:
   enabled: false
 redis:
-  connection: redis://spin-redis:6379
+  connection: redis://spinnaker-redis:6379
 rosco:
   configDir: /opt/rosco/config/packer
 server:
