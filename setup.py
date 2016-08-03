@@ -180,6 +180,6 @@ poll()
 o("./podexec spinnaker apt-get update")
 o("./podexec spinnaker apt-get install -y git")
 o("./podexec spinnaker git clone git@github.com:moondev/SpiniKube.git /SpiniKube")
-o("./podexec spinnaker apt-get install -y cqlsh -e 'COPY front50.pipeline FROM \'/SpiniKube/pipelines/pipelines.csv\' WITH HEADER = \'true\';'")
+o("./podexec spinnaker cqlsh -e 'COPY front50.pipeline FROM \'/SpiniKube/pipelines/pipelines.csv\' WITH HEADER = \'true\';'")
 
 o("minikube service spinnaker-start -n spinnaker")
