@@ -173,3 +173,7 @@ os.system("kubectl create secret generic start-config --from-file=./applications
 
 c("applications/start/deployment.yml")
 c("applications/start/service.json")
+
+poll()
+
+o("minikube service spinnaker-start -n spinnaker")
